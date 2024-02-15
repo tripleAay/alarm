@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="input" type="number">
+    <button onclick="alarmChk()">Check Alarm</button>
+    <p id="display"></p>
+    <audio id="alarmSound" src="../mr daniel/spotifydown.com - Pidgin & English.mp3"></audio>
+</body>
+</html>
+<script>
+    
+    let date = new Date();
+    let display = document.getElementById("display");
+    let alarmSound = document.getElementById("alarmSound");
+
+    let minutes = date.getMinutes();
+    console.log(minutes);
+    console.log(date); 
+
+function alarmChk(){
+    let input = document.getElementById("input").value; 
+    if (parseInt(input)===minutes){
+        alert("trigger aLARM")
+        alarmSound.play();
+        
+
+    } else {
+        alert('alarm time not ready, current time is' + minutes)
+        for (let index = 0; index < minutes; index++) {
+            if(index = input){
+                alarmSound.play();
+            }
+            
+        }
+        return;
+    }
+   
+
+}
+setInterval(date, 60000);
+display.innerHTML += date;
+
+
+
+
+</script>
