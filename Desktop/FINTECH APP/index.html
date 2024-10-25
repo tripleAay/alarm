@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fintech</title>
+    <link rel="stylesheet" type="" href="./css/app.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    .container {
+        width: 1280px;
+        height: auto;
+        /* background-color: black; */
+
+    }
+</style>
+
+<body>
+
+    <div class="container">
+
+        <!-- Responsive Nav Bar using TailwindCSS -->
+        <nav class="bg-[#BFBB9C] p-4 fixed w-full z-50 shadow-md">
+            <div class="container mx-auto flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-black h-10 w-36"></div>
+                    <!-- Main Navigation Links -->
+                    <ul class="hidden md:flex space-x-6">
+                        <li class="relative group">
+                            <a href="#about" class="text-white hover:bg-white/50 p-2 rounded transition">About</a>
+                            <div
+                                class="absolute left-0 hidden mt-1 group-hover:flex flex-col bg-white shadow-lg rounded">
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">Our Team</a>
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">Mission</a>
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">Vision</a>
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">History</a>
+                            </div>
+                        </li>
+                        <li class="relative group">
+                            <a href="#services" class="text-white hover:bg-white/50 p-2 rounded transition">Services</a>
+                            <div
+                                class="absolute left-0 hidden mt-1 group-hover:flex flex-col bg-white shadow-lg rounded">
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">Web Design</a>
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">SEO</a>
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">Marketing</a>
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">Support</a>
+                            </div>
+                        </li>
+                        <li class="relative group">
+                            <a href="#contact" class="text-white hover:bg-white/50 p-2 rounded transition">Contact</a>
+                            <div
+                                class="absolute left-0 hidden mt-1 group-hover:flex flex-col bg-white shadow-lg rounded">
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">Email Us</a>
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">Call Us</a>
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">Visit Us</a>
+                                <a href="#" class="p-2 hover:bg-gray-200 transition">FAQ</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right Navigation (Sign In/Create Account) -->
+                <div class="flex items-center space-x-4">
+                    <a href="./signin.html"
+                        class="bg-black text-white py-2 px-4 rounded hover:bg-white hover:text-black transition">Sign
+                        In</a>
+                    <a href="./signuprocess.html"
+                        class="bg-[#0c1825] text-white py-2 px-4 rounded hover:bg-[#ffcc00] hover:text-black transition">Create
+                        Free Account</a>
+                    <!-- Mobile Menu Toggle -->
+                    <button id="menu-toggle" class="md:hidden flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            class="w-6 h-6 text-black">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
+                <ul class="flex flex-col p-4 space-y-2">
+                    <li><a href="#about" class="block text-black hover:bg-gray-200 p-2 rounded">About</a></li>
+                    <li><a href="#services" class="block text-black hover:bg-gray-200 p-2 rounded">Services</a></li>
+                    <li><a href="#contact" class="block text-black hover:bg-gray-200 p-2 rounded">Contact</a></li>
+                    <li><a href="./signin.html" class="block text-black hover:bg-gray-200 p-2 rounded">Sign In</a></li>
+                    <li><a href="./singupprocess.html" class="block text-black hover:bg-gray-200 p-2 rounded">Create Free
+                            Account</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="main">
+            <div>
+                <div class="main-sub">
+                    <div class="app-entry">
+                        <div class="mainApp-section">
+                            <h1>The Money App for <br> Africans</h1>
+                            <p> Experience seamless transfers, tap into cashless <br> convenience,
+                                and grow your savings with TriplePay <br> —your all-in-one digital
+                                wallet for smarter <br> money management. </p>
+                            <div class="callToActions">
+                                <button class="callToApple">Get on Apple</button>
+                                <button class="calltoAndriod">Get on Andriod</button>
+                            </div>
+                            <div class="licenseAction"></div>
+                        </div>
+                        <div class="mainAppImg-section">
+                            <div class="prev"><i style="font-size: 30px; cursor: pointer;"
+                                    class="fa-solid fa-chevron-left"></i></div>
+                            <img style="width: 480px; height:  300px;  ;" src="./assets/image/pic.png" alt="">
+                            <div class="next"><i style="font-size: 30px; cursor: pointer;"
+                                    class="fa-solid fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+                    <div class="Services-section w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 mt-16">
+                        <!-- Services Tiles -->
+                        <div class="serviceTile bg-[#5e3dc6] text-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold mb-2">Money Transfers</h2>
+                            <p>Effortlessly send and receive money worldwide with just a few taps. Our secure platform
+                                guarantees quick, hassle-free transactions for friends, family, and payments.</p>
+                        </div>
+                        <div class="serviceTile bg-[#5e3dc6] text-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold mb-2">Customer Registration</h2>
+                            <p>Get started quickly with our simple and secure registration process. Create your account
+                                in minutes and access a full range of financial services with ease.</p>
+                        </div>
+                        <div class="serviceTile bg-[#5e3dc6] text-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold mb-2">Airtime Recharge</h2>
+                            <p>Top up your mobile airtime instantly. Our app supports multiple carriers, allowing you to
+                                recharge your phone or your loved ones' phones conveniently from anywhere.</p>
+                        </div>
+                        <div class="serviceTile bg-[#5e3dc6] text-white p-6 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold mb-2">Bills Payment</h2>
+                            <p>Manage and pay all your bills effortlessly. From utilities to subscriptions, keep track
+                                of your payments and avoid late fees with our easy-to-use bill payment feature.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-below">
+                        <div class="left_section-below">
+                            <h1>Your phone + <br>
+                                our app + <br>
+                                a debit card = <br>
+                                a simpler life.</h1>
+                            <p>TriplePay is crafted for your dynamic lifestyle, offering a seamless digital wallet
+                                experience. Get your TriplePay debit card and unlock smarter, more secure ways to manage
+                                your money</p>
+                            <div style="margin-top: 20px; display: flex; align-items: center; justify-content: left;"><a
+                                    style="margin-right: 15px;" href="./singupprocess.html">Open An Account in Minutes
+                                </a> <i class="fa-solid fa-angle-right"></i></div>
+                        </div>
+                        <div class="right_section-below">
+                            <img style="width: 510px; height: 510px;" src="./assets/image/app_img-01-01.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="sectionII-below">
+            <img src="./assets/image/stock.jpg" alt="">
+            <div></div>
+
+            <div></div>
+
+        </div>
+        <section class="testimonials">
+            <h2>Don’t just take our word for it</h2>
+            <div class="testimonials-container">
+                <div class="testimonial">
+                    <p>This is the best banking app! I'm enjoying seamless banking, and the free transfers to other
+                        banks are a real joy. This is what I call true freedom. I've made TriplePay my main bank account
+                        and will definitely refer all my friends</p>
+                    <div class="user">
+                        <img src="./assets/image/pp-b.jpeg" alt="User Image">
+                        <p>@RealSOK_</p>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p>I love that TriplePay not only offers zero fees and 25 free transfers each month, but also allows
+                        you to create a personalized budget plan to manage your spending effectively. It's truly a
+                        game-changer!</p>
+                    <div class="user">
+                        <img src="./assets/image/pp-a.jpeg" alt="User Image">
+                        <p>Adebambo Oyekan</p>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p>I highly recommend TriplePay; it lives up to its promise as 'The bank of freedom.' I received my
+                        TriplePay card, and it's been fantastic</p>
+                    <div class="user">
+                        <div class="user-initials">I</div>
+                        <p>Ifeanyichukwu Obaji</p>
+                    </div>
+                </div>
+            </div>
+            <div class="logos">
+                <img src="logo1.png" alt="TechCrunch">
+                <img src="logo2.png" alt="World Economic Forum">
+                <img src="logo3.png" alt="Fintech Futures">
+                <img src="logo4.png" alt="BBC">
+                <img src="logo5.png" alt="CNBC Africa">
+                <img src="logo6.png" alt="Euromoney">
+            </div>
+        </section>
+        <footer class="tp-footer">
+            <div class="tp-footer-container">
+                <div class="tp-footer-logo">
+                    <img src="path-to-logo/kuda-logo.png" alt="TriplePay Logo">
+                </div>
+                <div class="tp-footer-links">
+                    <div class="tp-footer-section">
+                        <h4 class="tp-footer-heading">Personal</h4>
+                        <ul class="tp-footer-list">
+                            <li><a href="#">Discover Personal</a></li>
+                            <li><a href="#">Transfer & Spend</a></li>
+                            <li><a href="#">Save</a></li>
+                            <li><a href="#">Investments</a></li>
+                            <li><a href="#">TriplePay card</a></li>
+                        </ul>
+                    </div>
+                    <div class="tp-footer-section">
+                        <h4 class="tp-footer-heading">Business</h4>
+                        <ul class="tp-footer-list">
+                            <li><a href="#">Discover Business</a></li>
+                            <li><a href="#">Business Registration</a></li>
+                            <li><a href="#">softPOS</a></li>
+                            <li><a href="#">Invoicing</a></li>
+                            <li><a href="#">Salary Loan</a></li>
+                            <li><a href="#">Business API</a></li>
+                            <li><a href="#">Join TriplePay Business</a></li>
+                        </ul>
+                    </div>
+                    <div class="tp-footer-section">
+                        <h4 class="tp-footer-heading">Company</h4>
+                        <ul class="tp-footer-list">
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="#">Join Our Team</a></li>
+                            <li><a href="#">About Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="tp-footer-section">
+                        <h4 class="tp-footer-heading">Help</h4>
+                        <ul class="tp-footer-list">
+                            <li><a href="#">Get Help</a></li>
+                            <li><a href="#">Scam Awareness</a></li>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Self Help</a></li>
+                        </ul>
+                    </div>
+                    <div class="tp-footer-section">
+                        <h4 class="tp-footer-heading">Transparency</h4>
+                        <ul class="tp-footer-list">
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Information Security Policy</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                            <li><a href="#">Whistleblowing Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tp-footer-app-links">
+                    <a href="#"><img src="./assets/image/apple-01.png " alt="Download on the App Store"></a>
+                    <a href="#"><img src="path-to-play-store-logo" alt="Get it on Google Play"></a>
+                    <a href="#"><img src="path-to-web-logo" alt="Sign in on the Web"></a>
+                </div>
+                <p class="tp-footer-disclaimer">Products may vary by country or market.</p>
+            </div>
+        </footer>
+
+
+
+    </div>
+
+
+    <script type="module" src="path/to/firebase-init.js"></script>
+</body>
+
+</html>
+<script>
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenu.classList.toggle('hidden');
+    });
+
+</script>

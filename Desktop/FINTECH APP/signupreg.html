@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TriplePay Signup Process</title>
+    <link rel="stylesheet" href="./css/app.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
+</head>
+
+<script>
+    // JavaScript function to toggle between the first and second form
+    function showSecondForm() {
+        // Hide the first form
+        document.getElementById("first-form").classList.add("hidden");
+
+        // Show the second form
+        document.getElementById("second-form").classList.remove("hidden");
+    }
+
+    function showFirstForm() {
+        document.getElementById("first-form").classList.remove("hidden");
+        document.getElementById("second-form").classList.add("hidden");
+    }
+</script>
+
+<body class="bg-gray-100 p-6 flex items-center justify-center h-screen bg-cover bg-center"
+    style="background-image: url('./assets/image/background image.jpg');">
+    <div class="bg-white/80 shadow-lg rounded-lg p-8 max-w-lg w-full max-h-screen overflow-y-auto">
+
+        <!-- Logo Section -->
+        <div class="text-center mb-6">
+            <img src="./assets/image/pay daddie.png" alt="PayDaddie Logo" class="w-32 mx-auto mb-4">
+            <h1 class="text-2xl font-bold text-gray-800">Get Started with PayDaddie</h1>
+            <p class="text-gray-500">Let’s get to know you</p>
+        </div>
+
+        <!-- First Form -->
+        <div id="first-form">
+            <form id="signup-form">
+                <div class="mb-4">
+                    <label for="personality" class="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                    <select id="personality" name="personality"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="Mr">Mr</option>
+                        <option value="Miss">Miss</option>
+                        <option value="Mrs">Mrs</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="firstname" class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                    <input type="text" id="firstname" name="firstname" placeholder="First Name" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="lastname" class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                    <input type="text" id="lastname" name="lastname" placeholder="Last Name" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="gender" class="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
+                    <select id="gender" name="gender"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="" disabled selected>Select an option</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+                    <div class="flex space-x-2">
+                        <select id="country-code" name="country-code"
+                            class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="+234">+234</option>
+                            <option value="+1">+1</option>
+                            <option value="+44">+44</option>
+                        </select>
+                        <input type="tel" id="phone" name="phone" placeholder="Phone number" required
+                            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <span class="text-red-500 text-sm hidden">Please provide a valid phone number</span>
+                </div>
+
+                <div class="mb-6">
+                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="text-center">
+                    <button id="next" type="button"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-bold transition duration-300 ease-in-out"
+                        onclick="showSecondForm()">Next</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Second Form (Hidden by default) -->
+        <div id="second-form" class="hidden">
+            <form id="signup-formm">
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="confirm-password" class="block text-sm font-semibold text-gray-700 mb-2">Confirm
+                        Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password"
+                        required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="bvn" class="block text-sm font-semibold text-gray-700 mb-2">BVN</label>
+                    <input type="text" id="bvn" name="bvn" placeholder="Enter your BVN" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">Address</label>
+                    <input type="text" id="address" name="address" placeholder="Enter your address" required
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-6">
+                    <label for="country" class="block text-sm font-semibold text-gray-700 mb-2">Country of
+                        Residence</label>
+                    <select id="country" name="country"
+                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="USA">USA</option>
+                        <option value="UK">UK</option>
+                    </select>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="showFirstForm()" type="button"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 px-6 rounded-md font-bold transition duration-300 ease-in-out">Prev</button>
+                    <button id="submitDiv" type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-md font-bold transition duration-300 ease-in-out">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showSecondForm() {
+            document.getElementById('first-form').classList.add('hidden');
+            document.getElementById('second-form').classList.remove('hidden');
+        }
+
+        function showFirstForm() {
+            document.getElementById('second-form').classList.add('hidden');
+            document.getElementById('first-form').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>
+
+<script src="./js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<script>
+    const form = document.getElementById('signup-formm');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+
+        const firstname = document.getElementById('firstname').value;
+        const lastname = document.getElementById('lastname').value;
+        const gender = document.getElementById('gender').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        const bvn = document.getElementById('bvn').value;
+        const address = document.getElementById('address').value;
+        const country = document.getElementById('country').value;
+        const balance = 5000;
+        const pin = '0000';
+
+        // Functions to generate account number, card number, and CVV
+        function generateAccountNumber() {
+            return Math.floor(Math.random() * 10000000000); // Generates random 10-digit number
+        }
+
+        function generateDebitCardNumber() {
+            return Math.floor(Math.random() * 1000000000000000); // Generates random 16-digit number
+        }
+
+        function generateCVV() {
+            return Math.floor(Math.random() * 1000).toString().padStart(3, '0'); // Generates random 3-digit CVV
+        }
+
+        // Validate password
+        if (password !== confirmPassword) {
+            Toastify({
+                text: "Passwords do not match!",
+                backgroundColor: "linear-gradient(to right, #FF5F6D, #FFC371)",
+                duration: 3000
+            }).showToast();
+            return;
+        }
+
+        if (password.length < 6) {
+            Toastify({
+                text: "Password is too short!",
+                backgroundColor: "linear-gradient(to right, #FF5F6D, #FFC371)",
+                duration: 3000
+            }).showToast();
+            return;
+        }
+
+        // Firebase authentication
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                const uid = user.uid; // Unique ID of the logged-in user
+
+                const account = generateAccountNumber();
+                const cardNum = generateDebitCardNumber();
+                const cvv = generateCVV();
+
+                // Store user information locally (if necessary)
+                localStorage.setItem('currentUser', JSON.stringify({
+                    uid, 
+                }));
+
+                // Add user to Firestore using UID as a unique identifier
+                return db.collection("users").doc(uid).set({
+                    uid, firstname, lastname, gender, phone, email, bvn, address, country, account, balance, card: cardNum, cvv, pin
+                });
+            })
+            .then(() => {
+                // Notify success
+                Toastify({
+                    text: "Account successfully created!",
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                    duration: 3000 // Show the toast for 3 seconds
+                }).showToast();
+
+                // Delay the redirection by 3 seconds (3000 milliseconds)
+                setTimeout(() => {
+                    window.location.href = 'signin.html';
+                }, 3000); // 3 seconds delay
+            })
+            .catch((error) => {
+                console.error("Error during Firestore write: ", error.message);
+                Toastify({
+                    text: "Error: " + error.message,
+                    backgroundColor: "linear-gradient(to right, #FF5F6D, #FFC371)",
+                    duration: 3000 // Show the error toast for 3 seconds
+                }).showToast();
+            });
+    });
+</script>
+

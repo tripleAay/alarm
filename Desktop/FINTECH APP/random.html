@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debit Card Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: rotateX(8deg) rotateY(-8deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Airtime Purchase</title>
+    </head>
+
+    <body>
+        <h2>Buy Airtime</h2>
+
+        <!-- Airtime Purchase Form -->
+        <form id="airtimeForm">
+            <label for="network">Select Network:</label>
+            <select id="network" required>
+                <option value="MTN">MTN</option>
+                <option value="Airtel">Airtel</option>
+                <option value="Glo">Glo</option>
+                <option value="9mobile">9mobile</option>
+            </select><br><br>
+
+            <label for="amount">Enter Amount (NGN):</label>
+            <input type="number" id="amount" required><br><br>
+
+            <button type="button" id="paystack-btn">Pay Now</button>
+        </form>
+
+        <script src="https://js.paystack.co/v1/inline.js"></script>
+        <script>
+            // Listen for Paystack payment click event
+            document.getElementById('paystack-btn').addEventListener('click', function () {
+                // Get selected network and amount from form
+                var network = document.getElementById('network').value;
+                var amount = document.getElementById('amount').value * 100; // Convert NGN to kobo
+
+                if (!amount || amount <= 0) {
+                    alert('Please enter a valid amount.');
+                    return;
+                }
+
+                var handler = PaystackPop.setup({
+                    key: 'your_paystack_public_key_here', // Replace with your public key
+                    email: 'user@example.com', // Replace with customer's email
+                    amount: amount, // Amount in kobo
+                    currency: 'NGN',
+                    ref: 'unique_reference_' + Math.floor(Math.random() * 1000000000), // Unique transaction reference
+                    callback: function (response) {
+                        // Payment is successful
+                        console.log('Payment complete! Reference: ' + response.reference);
+
+                        // Call the airtime API here to send airtime to the selected network
+                        sendAirtime(response.reference, network, amount / 100); // Pass network and amount
+                    },
+                    onClose: function () {
+                        alert('Transaction was not completed.');
+                    }
+                });
+                handler.openIframe();
+            });
+
+            // Function to send airtime via your airtime API
+            function sendAirtime(reference, network, amount) {
+                console.log('Sending airtime to ' + network + ' for amount NGN ' + amount);
+
+                // Make API call to send airtime
+                fetch('https://your-airtime-api.com/topup', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer your_airtime_api_key',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        reference: reference, // Reference from Paystack
+                        network: network, // User's selected network
+                        amount: amount // Recharge amount in NGN
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            alert('Airtime sent successfully to ' + network);
+                        } else {
+                            console.error('Failed to send airtime:', data);
+                            alert('Failed to send airtime.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while sending airtime.');
+                    });
+            }
+        </script>
+    </body>
+
+    </html>
+
+
+</body>
+
+</html>
+
+<script>
+    // Retrieve the currentUser data from localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (currentUser) {
+        console.log("Current User:", currentUser);
+        console.log("Email:", currentUser.email);
+        console.log("First Name:", currentUser.firstname);
+        console.log("Last Name:", currentUser.lastname);
+        console.log("Account Number:", currentUser.account);
+    } else {
+        console.log("No user is currently stored in localStorage.");
+    }
+
+
+    // Example of retrieving the current user from localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+        console.log("Current User:", currentUser);
+    }
+
+</script>

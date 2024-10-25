@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TriplePay Dashboard</title>
+    <link rel="stylesheet" href="./css/app.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background-color: #cea6e4;
+        color: #333;
+    }
+
+    .home-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .send-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .pay-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+
+
+    .page {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    /* Splash-Out Animation */
+    @keyframes splashOut {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.5);
+            opacity: 0.5;
+        }
+
+        100% {
+            transform: scale(0);
+            opacity: 0;
+        }
+    }
+
+    /* Hide element after animation */
+</style>
+
+<body>
+    <nav class="bg-[#EEF8FF] shadow-md py-4 px-6 sticky top-0 z-50">
+        <div class=" container mx-auto flex justify-between items-center">
+            <!-- Logo Section -->
+            <div
+                class="logo text-[#5e3dc6] font-bold text-xl hover:text-[#4e32a9] transition-all duration-300 ease-in-out">
+                <a href="./index.html">PayDaddie</a>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="menu text-gray-600 hidden md:flex space-x-6 text-gray-600 font-medium">
+                <a id="home-nav" href="./dashboard.html"
+                    class=" flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="nav-entry" class="page fa-solid fa-house mr-2"> <span>Home</span> </i>
+                </a>
+                <a id="send-nav" href="./send.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="send-entry" class="page fa-solid fa-paper-plane mr-2"></i> Send
+                </a>
+                <a id="pay-nav" href="./pay.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="pay-entry" class="page fa-solid fa-wallet mr-2"></i>Pay
+
+                </a>
+                <a id="gift-nav" href="./giftcards.html"
+                    class="hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="gift-entry" class="page fa-solid fa-money-bill-wave mr-2"></i>Gift Cards
+
+                    </span>
+                </a>
+                <a id="card-nav" href="./card.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="card-entry" class="page fa-solid fa-credit-card mr-2"></i> Card
+                </a>
+            </div>
+
+            <!-- Account Section -->
+            <div class="account flex items-center space-x-4 cursor-pointer  bg-[#3B28CC] p-2 rounded-lg  hover:bg-[] transition-all duration-300 ease-in-out shadow-sm"
+                onclick="window.location.href='./profile.html'">
+                <span class="font-semibold text-white hover:text-white ">Hello &#128512; <span
+                        id="user-firstname"></span></span>
+                <img id="profileImagePreview" alt="Profile Picture"
+                    class="w-10 h-10 rounded-full object-cover border-2 border-[#5e3dc6] hover:border-[#4e32a9] transition-all duration-300 ease-in-out">
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center">
+                <button class="text-gray-600 focus:outline-none" id="mobile-menu-button">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden md:hidden mt-4 space-y-4 text-center text-gray-600 font-medium" id="mobile-menu">
+            <a href="./dashboard.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i id="" class="fa-solid fa-house mr-2"></i> Home
+            </a>
+            <a href="./send.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Send
+            </a>
+            <a href="./pay.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-money-bill-wave mr-2"></i> Pay
+            </a>
+            <a href="./giftcards.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                Gift Cards
+            </a>
+            <a href="./card.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-credit-card mr-2"></i> Card
+            </a>
+        </div>
+    </nav>
+
+
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+
+
+
+    <!-- MONEY SEND SECTION DISPLAY -->
+
+    <div style="display: block;" id="spend-section" class="spend-section">
+        <div class="spendsection-display">
+            <!-- <div class="beneficiary-topsectiondetails">
+                <p>Beneficiaries</p>
+                <p>View All</p>
+            </div> -->
+
+            <div class="beneficiary-sectiondetails">
+
+                <div class="beneficairy-contact">
+                    <div class="beneficiary-initials">A</div>
+                    <p>Adedokun Adeshina</p>
+                </div>
+                <div class="beneficairy-contact">
+                    <div class="beneficiary-initials">A</div>
+                    <p>Adedokun Adeshina</p>
+                </div>
+                <div class="beneficairy-contact">
+                    <div class="beneficiary-initials">A</div>
+                    <p>Adedokun Adeshina</p>
+                </div>
+                <div class="beneficairy-contact">
+                    <div class="beneficiary-initials">A</div>
+                    <p>Adedokun Adeshina</p>
+                </div>
+            </div>
+
+            <!-- SEND MONEY TO A LOCAL BANK ACCOUNT -->
+
+            <div id="sendBank" class="Group-Bank mt-5">
+                <div class="sendBank-icon bg-[#5e3dc6] hover:bg-[#BFBB9C] text-white 
+                    hover:text-[#5e3dc6] transition-all duration-300 rounded-lg px-6 
+                    py-4 flex items-center justify-between shadow-lg cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-paper-plane text-xl"></i>
+                        <div>
+                            <h4 class="font-bold text-lg">Send to Bank Account</h4>
+                            <p class="text-sm opacity-80">Send to a local bank account</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="sendBank-input" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center z-50 overflow-hidden">
+        <div class="form-card bg-white shadow-lg rounded-xl max-w-md w-full max-h-[90vh] p-6 space-y-6 relative overflow-y-auto">
+            <!-- Back and Add Beneficiary Buttons -->
+            <div class="absolute top-4 left-4 w-full pr-4 flex items-center justify-between">
+                <!-- Back Button -->
+                <a id="back-send" href="#" class="text-[#5e3dc6] hover:text-[#4a34b8] text-lg font-semibold flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i> Back
+                </a>
+            
+                <!-- Add Beneficiary Button -->
+                <button id="add-beneficiary-btn" class="bg-[#5e3dc6] hover:bg-[#4a34b8] text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg focus:ring-4 focus:ring-[#BFBB9C] transition-all duration-300 ease-in-out">
+                    <i class="fas fa-user-plus mr-2"></i> Add Beneficiary
+                </button>
+            </div>
+            
+    
+            <!-- Form Header -->
+            <h2 class="text-2xl font-bold text-gray-800 text-center mt-10">Send to Bank Account <span class="flag">🇳🇬</span></h2>
+            <h3 class="text-lg text-gray-600 text-center">New NGN Recipient</h3>
+    
+            <!-- Form -->
+            <form class="space-y-5">
+                <!-- Bank Selection -->
+                <div class="input-group">
+                    <label for="bank" class="block text-sm font-medium text-gray-700">Bank</label>
+                    <div class="relative">
+                        <select id="banks" required class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300">
+                            <option value="" disabled selected>Pay Daddie</option>
+                            <option value="">Pay Daddie</option>
+                        </select>
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </div>
+                </div>
+    
+                <!-- Account Number Input -->
+                <div class="input-group">
+                    <label for="account-number" class="block text-sm font-medium text-gray-700">Account Number</label>
+                    <input type="number" id="account-number" placeholder="1234567890" required class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300">
+                </div>
+    
+                <!-- Amount Input -->
+                <div class="input-group">
+                    <label for="Amount" class="block text-sm font-medium text-gray-700">Amount</label>
+                    <input type="number" id="Amount" placeholder="NGN" required class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300">
+                </div>
+    
+                <!-- Transaction Description Input -->
+                <div class="input-group">
+                    <label for="description" class="block text-sm font-medium text-gray-700">Transaction Description</label>
+                    <textarea id="description" placeholder="Enter a brief description of the transaction..." required class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300 h-24"></textarea>
+                </div>
+    
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn w-full py-3 bg-[#5e3dc6] text-white rounded-lg font-semibold hover:bg-[#4a34b8] focus:ring-4 focus:ring-[#BFBB9C] transition-all duration-300 ease-in-out">
+                    Pay
+                </button>
+            </form>
+        </div>
+    </div>
+    <footer class="bg-[#5e3dc6] text-white py-8 px-4 sm:px-10 lg:px-20">
+        <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <!-- Logo and Description -->
+          <div class="flex flex-col space-y-4">
+            <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
+            <p class="text-sm text-gray-300">
+              Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial solutions for </br> everyone.
+            </p>
+          </div>
+      
+          <!-- Quick Links -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
+            </ul>
+          </div>
+      
+          <!-- Contact Information -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+            <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
+            <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
+            <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
+          </div>
+      
+          <!-- Social Media Links -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="https://www.instagram.com/" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Footer Bottom -->
+        <div class="mt-8 border-t border-gray-500 pt-6 text-center text-xs text-gray-400">
+          <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
+        </div>
+      </footer>
+    
+
+
+
+
+    <button id="signout-button" class="sticky-signout-button">Sign Out</button>
+
+    <script type="module" src="path/to/firebase-init.js"></script>
+</body>
+
+</html>
+<script src="./js/script.js"></script>
+
+
+<script>
+    // Get the elements
+    const sendBank = document.getElementById('sendBank');
+    const sendBankInput = document.getElementById('sendBank-input');
+    const backSend = document.getElementById('back-send');
+
+    // Show the popup when "Send to Bank" is clicked
+    sendBank.addEventListener('click', () => {
+        sendBankInput.classList.remove('hidden');
+    });
+
+    // Hide the popup when "Back" is clicked
+    backSend.addEventListener('click', (e) => {
+        e.preventDefault();
+        sendBankInput.classList.add('hidden');
+    });
+
+</script>
+
+<script>
+    // Function to load Nigerian banks into the dropdown
+    async function loadBanks() {
+        const response = await fetch('https://api.paystack.co/bank', {
+            headers: {
+                'Authorization': 'sk_live_4c0c483de863154878275348e33ced549d7ca07d', // Replace with your secret key
+            }
+        });
+        const data = await response.json();
+        const banks = data.data; // Array of banks
+
+        const dropdown = document.getElementById('banks');
+
+        // Loop through the banks and add them to the dropdown
+        banks.forEach(bank => {
+            const option = document.createElement('option');
+            option.value = bank.code; // The bank code will be used in your app
+            option.textContent = bank.name; // Display the bank name
+            dropdown.appendChild(option); // Add option to the dropdown
+        });
+    }
+
+    // Load the banks when the page loads
+    loadBanks();
+</script>
+
+
+<script>
+    // Get current user data from localStorage
+    const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
+
+    // Check if user is logged in and has valid data
+    if (currentUserData && currentUserData.uid) {
+        const uid = currentUserData.uid;
+
+        // Fetch the user's account balance from Firestore (assuming it's stored under 'balance')
+        db.collection("users").doc(uid).get().then(doc => {
+            if (doc.exists) {
+                const userData = doc.data();
+                const userBalance = userData.balance || 0;
+
+                // Log user's balance for debugging
+                console.log("User's balance:", userBalance);
+
+                // Handle form submission
+                document.querySelector('form').addEventListener('submit', function (e) {
+                    e.preventDefault(); // Prevent form from refreshing the page
+
+                    // Get values from form inputs
+                    const recipientAccount = document.getElementById('account-number').value;
+                    const transferAmount = parseFloat(document.getElementById('Amount').value);
+                    const description = document.getElementById('description').value;
+
+                    // Check if transfer amount is valid
+                    if (transferAmount <= 0) {
+                        alert("Invalid amount entered. Please enter a valid amount.");
+                        return;
+                    }
+
+                    // Check if the user has sufficient balance
+                    if (transferAmount > userBalance) {
+                        alert("Insufficient balance for this transfer.");
+                        return;
+                    }
+
+                    // Fetch the recipient's account to confirm it exists
+                    db.collection("users").where("accountNumber", "==", recipientAccount).get()
+                        .then(querySnapshot => {
+                            if (querySnapshot.empty) {
+                                alert("Invalid recipient account number. Please check and try again.");
+                                return;
+                            }
+
+                            // Assuming there's only one match for the account number
+                            const recipientDoc = querySnapshot.docs[0];
+                            const recipientData = recipientDoc.data();
+                            const recipientBalance = recipientData.balance || 0;
+
+                            // Perform the transfer: Deduct from sender and add to recipient
+                            const newSenderBalance = userBalance - transferAmount;
+                            const newRecipientBalance = recipientBalance + transferAmount;
+
+                            // Start a batch operation for atomic updates
+                            const batch = db.batch();
+
+                            // Update sender's balance
+                            const senderRef = db.collection("users").doc(uid);
+                            batch.update(senderRef, { balance: newSenderBalance });
+
+                            // Update recipient's balance
+                            const recipientRef = db.collection("users").doc(recipientDoc.id);
+                            batch.update(recipientRef, { balance: newRecipientBalance });
+
+                            // Commit the batch operation
+                            batch.commit().then(() => {
+                                alert(`Transfer of NGN ${transferAmount} to account ${recipientAccount} successful!`);
+                                console.log("New sender balance:", newSenderBalance);
+                                console.log("New recipient balance:", newRecipientBalance);
+                            }).catch(error => {
+                                console.error("Error during the transfer process:", error);
+                            });
+                        })
+                        .catch(error => {
+                            console.error("Error validating recipient account:", error);
+                        });
+                });
+            } else {
+                console.error("No user data found for this UID.");
+            }
+        }).catch(error => {
+            console.error("Error retrieving user data:", error);
+        });
+    } else {
+        console.error("No current user found in localStorage.");
+    }
+</script>
+
+<!-- NAV BAR EFFECTS -->
+<script>
+    document.getElementById("home-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const navEntry = document.getElementById("nav-entry");
+
+        // Add splash animation
+        navEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./dashboard.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("send-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const sendEntry = document.getElementById("send-entry");
+
+        // Add splash animation
+        sendEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./send.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("pay-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const payEntry = document.getElementById("pay-entry");
+
+        // Add splash animation
+        payEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./pay.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("gift-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const giftEntry = document.getElementById("gift-entry");
+
+        // Add splash animation
+        giftEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./giftcards.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("card-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const cardEntry = document.getElementById("card-entry");
+
+        // Add splash animation
+        cardEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./card.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+
+
+<!-- beneficiary  -->
+<script>
+    // Initialize Firestore
+    const db = firebase.firestore();
+
+    document.getElementById("add-beneficiary-btn").addEventListener("click", addBeneficiary);
+
+    function addBeneficiary() {
+        // Capture form data
+        const bank = document.getElementById("banks").value;
+        const accountNumber = document.getElementById("account-number").value;
+        const amount = document.getElementById("amount").value;
+        const description = document.getElementById("description").value;
+        const timestamp = new Date();
+
+        // Validate form inputs
+        if (!bank || !accountNumber || !amount || !description) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        // Save to Firestore
+        db.collection("beneficiaries").add({
+            bank,
+            accountNumber,
+            amount,
+            description,
+            timestamp
+        }).then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+            alert("Beneficiary added successfully!");
+
+            // Clear form fields
+            document.getElementById("beneficiary-form").reset();
+
+            // Display updated list of beneficiaries
+            displayBeneficiaries();
+        }).catch((error) => {
+            console.error("Error adding document: ", error);
+        });
+    }
+
+    // Function to fetch and display beneficiaries on the page
+    function displayBeneficiaries() {
+        const beneficiariesContainer = document.getElementById("beneficiaries-list");
+        beneficiariesContainer.innerHTML = ""; // Clear existing data
+
+        db.collection("beneficiaries").orderBy("timestamp", "desc").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const beneficiaryItem = document.createElement("div");
+                beneficiaryItem.classList.add("beneficiary-item");
+                beneficiaryItem.innerHTML = `
+                <p><strong>Bank:</strong> ${data.bank}</p>
+                <p><strong>Account Number:</strong> ${data.accountNumber}</p>
+                <p><strong>Amount:</strong> ${data.amount}</p>
+                <p><strong>Description:</strong> ${data.description}</p>
+                <p><strong>Timestamp:</strong> ${data.timestamp.toDate().toLocaleString()}</p>
+                <hr>
+            `;
+                beneficiariesContainer.appendChild(beneficiaryItem);
+            });
+        }).catch((error) => {
+            console.error("Error retrieving beneficiaries: ", error);
+        });
+    }
+
+    // Call displayBeneficiaries on page load to display existing data
+    window.onload = function () {
+        displayBeneficiaries();
+    };
+
+</script>

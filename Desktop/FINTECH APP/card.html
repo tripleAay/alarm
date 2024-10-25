@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TriplePay Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    .home-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+    .send-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+    .pay-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+
+
+    .page {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    /* Splash-Out Animation */
+    @keyframes splashOut {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.5);
+            opacity: 0.5;
+        }
+
+        100% {
+            transform: scale(0);
+            opacity: 0;
+        }
+    }
+
+    /* Hide element after animation */
+</style>
+
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-[#EEF8FF] shadow-md py-4 px-6 sticky top-0 z-50">
+        <div class=" container mx-auto flex justify-between items-center">
+            <!-- Logo Section -->
+            <div
+                class="logo text-[#5e3dc6] font-bold text-xl hover:text-[#4e32a9] transition-all duration-300 ease-in-out">
+                <a href="./index.html">PayDaddie</a>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="menu text-gray-600 hidden md:flex space-x-6 text-gray-600 font-medium">
+                <a id="home-nav" href="./dashboard.html"
+                    class=" flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="nav-entry" class="page fa-solid fa-house mr-2"> <span>Home</span> </i> 
+                </a>
+                <a id="send-nav" href="./send.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="send-entry" class="page fa-solid fa-paper-plane mr-2"></i> Send
+                </a>
+                <a id="pay-nav" href="./pay.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="pay-entry" class="page fa-solid fa-wallet mr-2"></i>Pay
+                     
+                </a>
+                <a id="gift-nav" href="./giftcards.html"
+                    class="hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="gift-entry" class="page fa-solid fa-money-bill-wave mr-2"></i>Gift Cards
+                        
+                    </span> 
+                </a>
+                <a id="card-nav" href="./card.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="card-entry" class="page fa-solid fa-credit-card mr-2"></i> Card
+                </a>
+            </div>
+
+            <!-- Account Section -->
+            <div class="account flex items-center space-x-4 cursor-pointer  bg-[#3B28CC] p-2 rounded-lg  hover:bg-[] transition-all duration-300 ease-in-out shadow-sm"
+                onclick="window.location.href='./profile.html'">
+                <span class="font-semibold text-white hover:text-white ">Hello &#128512; <span
+                        id="user-firstname"></span></span>
+                <img id="profileImagePreview" alt="Profile Picture"
+                    class="w-10 h-10 rounded-full object-cover border-2 border-[#5e3dc6] hover:border-[#4e32a9] transition-all duration-300 ease-in-out">
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center">
+                <button class="text-gray-600 focus:outline-none" id="mobile-menu-button">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden md:hidden mt-4 space-y-4 text-center text-gray-600 font-medium" id="mobile-menu">
+            <a href="./dashboard.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i id="" class="fa-solid fa-house mr-2"></i> Home
+            </a>
+            <a href="./send.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Send
+            </a>
+            <a href="./pay.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-money-bill-wave mr-2"></i> Pay
+            </a>
+            <a href="./giftcards.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                Gift Cards
+            </a>
+            <a href="./card.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-credit-card mr-2"></i> Card
+            </a>
+        </div>
+    </nav>
+
+    
+    
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+    
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+    
+    
+    
+    <!-- Main Content -->
+    <main class="min-h-screen bg-[#5e3dc6] py-8">
+        <div class="container mx-auto px-4 lg:px-0">
+            <!-- Header -->
+            <header class="flex justify-center items-center mb-10"> 
+                <h2 class="text-3xl font-bold text-[#5e3dc6]">Your Card</h2>
+            </header>
+            
+
+            <!-- Card Section -->
+            <section class="flex justify-center mb-12">
+                <div class="relative w-[350px] h-[220px] bg-gradient-to-br from-gray-900 to-black rounded-xl shadow-lg text-white p-6 transition-transform duration-300 transform hover:scale-105">
+
+                    <!-- Glossy Effect -->
+                    <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-transparent to-white opacity-5 pointer-events-none"></div>
+
+                    <!-- TriplePay Branding -->
+                    <div class="absolute top-4 left-4">
+                        <h2 class="text-sm font-bold tracking-widest text-gray-400">PAYDADDIE</h2>
+                    </div>
+
+                    <!-- Chip Icon -->
+                    <div class="absolute top-14 left-4">
+                        <div class="w-12 h-9 bg-yellow-400 rounded-sm shadow-md"></div>
+                    </div>
+
+                    <!-- Card Number -->
+                    <div class="absolute top-24 left-0 w-full flex justify-center">
+                        <div class="text-xl tracking-[0.3em]">
+                            <span>1234</span>
+                            <span>5678</span>
+                            <span>9012</span>
+                            <span>3456</span>
+                        </div>
+                    </div>
+
+                    <!-- Expiry Date -->
+                    <div class="absolute bottom-12 left-4 text-xs tracking-widest text-gray-300">
+                        <span>06/2026</span>
+                    </div>
+
+                    <!-- Cardholder Name -->
+                    <div class="absolute bottom-8 left-4 text-sm font-semibold tracking-wider text-gray-300">
+                        <span>John Doe</span>
+                    </div>
+
+                    <!-- Visa Logo -->
+                    <div class="absolute bottom-4 right-4">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa Logo" class="h-8">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Options Section -->
+            <section class="flex flex-col gap-8 max-w-3xl mx-auto w-full">
+                <!-- Option 1: Block Card -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 hover:bg-gray-100 cursor-pointer">
+                    <div class="flex items-center">
+                        <span class="icon-block mr-4 text-3xl text-[#5e3dc6]"><i class="fa-solid fa-ban"></i></span>
+                        <div>
+                            <p class="text-lg font-semibold text-gray-700">Block Card</p>
+                            <p class="text-sm text-gray-500">Temporarily disable this card</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Option 2: Manage Card -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 hover:bg-gray-100 cursor-pointer">
+                    <div class="flex items-center">
+                        <span class="icon-manage mr-4 text-3xl text-[#5e3dc6]"><i class="fa-solid fa-gear"></i></span>
+                        <div>
+                            <p class="text-lg font-semibold text-gray-700">Manage Card</p>
+                            <p class="text-sm text-gray-500">Choose where your card works</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Option 3: Card FAQs -->
+                <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 hover:bg-gray-100 cursor-pointer">
+                    <div class="flex items-center">
+                        <span class="icon-faq mr-4 text-3xl text-[#5e3dc6]"><i class="fa-solid fa-question-circle"></i></span>
+                        <div>
+                            <p class="text-lg font-semibold text-gray-700">Card FAQs</p>
+                            <p class="text-sm text-gray-500">Learn more about TriplePay cards</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            
+        </div>
+    </main>
+
+    <footer class="bg-[#5e3dc6] text-white py-8 px-4 sm:px-10 lg:px-20">
+        <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <!-- Logo and Description -->
+          <div class="flex flex-col space-y-4">
+            <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
+            <p class="text-sm text-gray-300">
+              Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial solutions for </br> everyone.
+            </p>
+          </div>
+      
+          <!-- Quick Links -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
+            </ul>
+          </div>
+      
+          <!-- Contact Information -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+            <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
+            <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
+            <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
+          </div>
+      
+          <!-- Social Media Links -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="https://www.instagram.com/" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Footer Bottom -->
+        <div class="mt-8 border-t border-gray-500 pt-6 text-center text-xs text-gray-400">
+          <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
+        </div>
+      </footer>
+
+</body>
+
+</html>
+<script src="./js/script.js" ></script>
+
+<!-- NAV BAR EFFECTS -->
+<script>
+    document.getElementById("home-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const navEntry = document.getElementById("nav-entry");
+
+        // Add splash animation
+        navEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./dashboard.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("send-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const sendEntry = document.getElementById("send-entry");
+
+        // Add splash animation
+        sendEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./send.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("pay-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const payEntry = document.getElementById("pay-entry");
+
+        // Add splash animation
+        payEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./pay.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("gift-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const giftEntry = document.getElementById("gift-entry");
+
+        // Add splash animation
+        giftEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./giftcards.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("card-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const cardEntry = document.getElementById("card-entry");
+
+        // Add splash animation
+        cardEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./card.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>

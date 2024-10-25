@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TriplePay Dashboard</title>
+    <link rel="stylesheet" href="./css/app.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background-color: #cea6e4;
+        color: #333;
+    }
+
+    /* .container {
+        background-color: #fff;
+        width: 800px;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        height: 700px;
+    } */
+    .home-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+    .send-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+    .pay-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+
+
+    .page {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    /* Splash-Out Animation */
+    @keyframes splashOut {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.5);
+            opacity: 0.5;
+        }
+
+        100% {
+            transform: scale(0);
+            opacity: 0;
+        }
+    }
+
+    /* Hide element after animation */
+</style>
+
+<body>
+    <nav class="bg-[#EEF8FF] shadow-md py-4 px-6 sticky top-0 z-50">
+        <div class=" container mx-auto flex justify-between items-center">
+            <!-- Logo Section -->
+            <div
+                class="logo text-[#5e3dc6] font-bold text-xl hover:text-[#4e32a9] transition-all duration-300 ease-in-out">
+                <a href="./index.html">PayDaddie</a>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="menu text-gray-600 hidden md:flex space-x-6 text-gray-600 font-medium">
+                <a id="home-nav" href="./dashboard.html"
+                    class=" flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="nav-entry" class="page fa-solid fa-house mr-2"> <span>Home</span> </i> 
+                </a>
+                <a id="send-nav" href="./send.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="send-entry" class="page fa-solid fa-paper-plane mr-2"></i> Send
+                </a>
+                <a id="pay-nav" href="./pay.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="pay-entry" class="page fa-solid fa-wallet mr-2"></i>Pay
+                     
+                </a>
+                <a id="gift-nav" href="./giftcards.html"
+                    class="hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="gift-entry" class="page fa-solid fa-money-bill-wave mr-2"></i>Gift Cards
+                        
+                    </span> 
+                </a>
+                <a id="card-nav" href="./card.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="card-entry" class="page fa-solid fa-credit-card mr-2"></i> Card
+                </a>
+            </div>
+
+            <!-- Account Section -->
+            <div class="account flex items-center space-x-4 cursor-pointer  bg-[#3B28CC] p-2 rounded-lg  hover:bg-[] transition-all duration-300 ease-in-out shadow-sm"
+                onclick="window.location.href='./profile.html'">
+                <span class="font-semibold text-white hover:text-white ">Hello &#128512; <span
+                        id="user-firstname"></span></span>
+                <img id="profileImagePreview" alt="Profile Picture"
+                    class="w-10 h-10 rounded-full object-cover border-2 border-[#5e3dc6] hover:border-[#4e32a9] transition-all duration-300 ease-in-out">
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center">
+                <button class="text-gray-600 focus:outline-none" id="mobile-menu-button">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden md:hidden mt-4 space-y-4 text-center text-gray-600 font-medium" id="mobile-menu">
+            <a href="./dashboard.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i id="" class="fa-solid fa-house mr-2"></i> Home
+            </a>
+            <a href="./send.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Send
+            </a>
+            <a href="./pay.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-money-bill-wave mr-2"></i> Pay
+            </a>
+            <a href="./giftcards.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                Gift Cards
+            </a>
+            <a href="./card.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-credit-card mr-2"></i> Card
+            </a>
+        </div>
+    </nav>
+
+    <!-- PAY SECTION -->
+    <div id="dashboard" class="dashboard bg-[#5e3dc6] min-h-screen py-10">
+        <div class="container max-w-screen-md mx-auto px-4 lg:px-6">
+
+            <!-- Header Section -->
+            <div class="tpay-header text-center mb-12">
+                <h1 class="text-3xl lg:text-5xl font-bold text-[#5e3dc6]">Pay</h1>
+                <div class="tpay-search-bar mt-6 relative flex justify-center">
+                    <input type="text" placeholder="Search for bill"
+                        class="w-full py-3 px-5 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5e3dc6] transition-all">
+                    <button
+                        class="tpay-clear-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-all">
+                        ✖
+                    </button>
+                </div>
+            </div>
+
+            <!-- Essentials Section -->
+            <div class="tpay-section mb-16">
+                <h2 class="text-2xl lg:text-3xl font-semibold text-gray-800 mb-8 text-center">Essentials</h2>
+                <div class="tpay-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+                    <a id="paystack-btn_Airtime" href="#" class="tpay-option group">
+                        <div class="tpay-icon text-5xl mb-3 transition-all group-hover:scale-105">📱</div>
+                        <span class="text-lg font-medium">Airtime</span>
+                    </a>
+                    <a href="#" class="tpay-option group">
+                        <div class="tpay-icon text-5xl mb-3 transition-all group-hover:scale-105">🌐</div>
+                        <span class="text-lg font-medium">Internet</span>
+                    </a>
+                    <a href="#" class="tpay-option group">
+                        <div class="tpay-icon text-5xl mb-3 transition-all group-hover:scale-105">💡</div>
+                        <span class="text-lg font-medium">Electricity</span>
+                    </a>
+                    <a href="#" class="tpay-option group">
+                        <div class="tpay-icon text-5xl mb-3 transition-all group-hover:scale-105">☀️</div>
+                        <span class="text-lg font-medium">Solar</span>
+                    </a>
+                    <a href="#" class="tpay-option group">
+                        <div class="tpay-icon text-5xl mb-3 transition-all group-hover:scale-105">📺</div>
+                        <span class="text-lg font-medium">TV</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Cardless Payments Section -->
+            <div class="tpay-section mb-16">
+                <h2 class="text-2xl lg:text-3xl font-semibold text-gray-800 mb-8 text-center">Cardless Payments</h2>
+                <div class="tpay-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <a href="#" class="tpay-option group">
+                        <div class="tpay-icon text-5xl mb-3 transition-all group-hover:scale-105">🏦</div>
+                        <span class="text-lg font-medium">Pay with Bank</span>
+                    </a>
+                    <a href="#" class="tpay-option group">
+                        <div class="tpay-icon text-5xl mb-3 transition-all group-hover:scale-105">#️⃣</div>
+                        <span class="text-lg font-medium">Pay with USSD</span>
+                    </a>
+                    <a href="#" class="tpay-option group">
+                        <div class="tpay-icon text-5xl mb-3 transition-all group-hover:scale-105">🏢</div>
+                        <span class="text-lg font-medium">Pay A Business</span>
+                    </a>
+                    <a href="#" class="tpay-option group">
+                        <div class="tpay-icon text-5xl mb-3 transition-all group-hover:scale-105">💳</div>
+                        <span class="text-lg font-medium">POS Terminal</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- airtime payout pop-up -->
+    <div id="modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-4 text-center">Buy Airtime</h2>
+            <form id="airtimeForm">
+                <!-- Network Selection -->
+                <label for="network" class="block text-sm font-medium text-gray-700 mb-2">Select Network:</label>
+                <select id="network" class="block w-full p-2 border border-gray-300 rounded-md mb-4" required>
+                    <option value="MTN">MTN</option>
+                    <option value="Airtel">Airtel</option>
+                    <option value="Glo">Glo</option>
+                    <option value="9mobile">9mobile</option>
+                </select>
+
+                <!-- Amount Input -->
+                <label for="amount" class="block text-sm font-medium text-gray-700 mb-2">Enter Amount (NGN):</label>
+                <input type="number" id="amount" class="block w-full p-2 border border-gray-300 rounded-md mb-4"
+                    placeholder="Enter amount in NGN" required>
+
+                <!-- Submit Button -->
+                <button type="button" id="paystack-btn"
+                    class="bg-green-600 text-white px-4 py-2 rounded-md w-full hover:bg-green-500">
+                    Pay Now
+                </button>
+            </form>
+            <!-- Close Button -->
+            <button id="close-modal" class="mt-4 text-red-600 text-sm hover:underline block w-full text-center">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-[#5e3dc6] text-white py-8 px-4 sm:px-10 lg:px-20">
+        <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <!-- Logo and Description -->
+          <div class="flex flex-col space-y-4">
+            <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
+            <p class="text-sm text-gray-300">
+              Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial solutions for </br> everyone.
+            </p>
+          </div>
+      
+          <!-- Quick Links -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
+            </ul>
+          </div>
+      
+          <!-- Contact Information -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+            <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
+            <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
+            <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
+          </div>
+      
+          <!-- Social Media Links -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="https://www.instagram.com/" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Footer Bottom -->
+        <div class="mt-8 border-t border-gray-500 pt-6 text-center text-xs text-gray-400">
+          <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
+        </div>
+      </footer>
+
+</body>
+
+</html>
+<script src="./js/script.js" ></script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<script>
+    // Show the modal when "Pay Now for Airtime" button is clicked
+    document.getElementById('paystack-btn_Airtime').addEventListener('click', function () {
+        document.getElementById('modal').classList.remove('hidden');
+    });
+
+    // Close the modal when "Close" button is clicked
+    document.getElementById('close-modal').addEventListener('click', function () {
+        document.getElementById('modal').classList.add('hidden');
+    });
+
+    // Paystack integration on payment button inside the modal
+    document.getElementById('paystack-btn').addEventListener('click', function () {
+        var network = document.getElementById('network').value;
+        var amount = document.getElementById('amount').value * 100; // Convert NGN to kobo
+
+        if (!amount || amount <= 0) {
+            alert('Please enter a valid amount.');
+            return;
+        }
+
+        var handler = PaystackPop.setup({
+            key: 'pk_test_bed6ca78582b257067e0e584f5304c5ea61fd5a8', // Replace with your public key
+            email: 'adeshina93@gmail.com', // Replace with user's email
+            amount: amount,
+            currency: 'NGN',
+            ref: 'unique_reference_' + Math.floor(Math.random() * 1000000000), // Generate unique transaction reference
+            callback: function (response) {
+                console.log('Payment complete! Reference: ' + response.reference);
+                sendAirtime(response.reference, network, amount / 100); // Call function to send airtime
+            },
+            onClose: function () {
+                alert('Transaction was not completed.');
+            }
+        });
+        handler.openIframe();
+    });
+
+    // Function to send airtime via your airtime API
+    function sendAirtime(reference, network, amount) {
+        console.log('Sending airtime to ' + network + ' for amount NGN ' + amount);
+
+        // Here, you will call your airtime API to actually send the airtime
+    }
+</script>
+
+<!-- NAV BAR EFFECTS -->
+<script>
+    document.getElementById("home-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const navEntry = document.getElementById("nav-entry");
+
+        // Add splash animation
+        navEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./dashboard.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("send-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const sendEntry = document.getElementById("send-entry");
+
+        // Add splash animation
+        sendEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./send.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("pay-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const payEntry = document.getElementById("pay-entry");
+
+        // Add splash animation
+        payEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./pay.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("gift-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const giftEntry = document.getElementById("gift-entry");
+
+        // Add splash animation
+        giftEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./giftcards.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("card-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const cardEntry = document.getElementById("card-entry");
+
+        // Add splash animation
+        cardEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./card.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>

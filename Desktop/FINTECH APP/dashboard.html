@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TriplePay Dashboard</title>
+    <link rel="stylesheet" href="./css/app.css">
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background-color: #cea6e4;
+        color: #333;
+
+    }
+
+    .home-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+    .send-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+    .pay-nav {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        text-align: center;
+    }
+
+
+    .page {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    /* Splash-Out Animation */
+    @keyframes splashOut {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.5);
+            opacity: 0.5;
+        }
+
+        100% {
+            transform: scale(0);
+            opacity: 0;
+        }
+    }
+
+    /* Hide element after animation */
+ 
+</style>
+
+<body>
+    <nav class="bg-[#EEF8FF] shadow-md py-4 px-6 sticky top-0 z-50">
+        <div class=" container mx-auto flex justify-between items-center">
+            <!-- Logo Section -->
+            <div
+                class="logo text-[#5e3dc6] font-bold text-xl hover:text-[#4e32a9] transition-all duration-300 ease-in-out">
+                <a href="./index.html">PayDaddie</a>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="menu text-gray-600 hidden md:flex space-x-6 text-gray-600 font-medium">
+                <a id="home-nav" href="./dashboard.html"
+                    class=" flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="nav-entry" class="page fa-solid fa-house mr-2"> <span>Home</span> </i> 
+                </a>
+                <a id="send-nav" href="./send.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="send-entry" class="page fa-solid fa-paper-plane mr-2"></i> Send
+                </a>
+                <a id="pay-nav" href="./pay.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="pay-entry" class="page fa-solid fa-wallet mr-2"></i>Pay
+                     
+                </a>
+                <a id="gift-nav" href="./giftcards.html"
+                    class="hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="gift-entry" class="page fa-solid fa-money-bill-wave mr-2"></i>Gift Cards
+                        
+                    </span> 
+                </a>
+                <a id="card-nav" href="./card.html"
+                    class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                    <i id="card-entry" class="page fa-solid fa-credit-card mr-2"></i> Card
+                </a>
+            </div>
+
+            <!-- Account Section -->
+            <div class="account flex items-center space-x-4 cursor-pointer  bg-[#3B28CC] p-2 rounded-lg  hover:bg-[] transition-all duration-300 ease-in-out shadow-sm"
+                onclick="window.location.href='./profile.html'">
+                <span class="font-semibold text-white hover:text-white ">Hello &#128512; <span
+                        id="user-firstname"></span></span>
+                <img id="profileImagePreview" alt="Profile Picture"
+                    class="w-10 h-10 rounded-full object-cover border-2 border-[#5e3dc6] hover:border-[#4e32a9] transition-all duration-300 ease-in-out">
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center">
+                <button class="text-gray-600 focus:outline-none" id="mobile-menu-button">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden md:hidden mt-4 space-y-4 text-center text-gray-600 font-medium" id="mobile-menu">
+            <a href="./dashboard.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i id="" class="fa-solid fa-house mr-2"></i> Home
+            </a>
+            <a href="./send.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Send
+            </a>
+            <a href="./pay.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-money-bill-wave mr-2"></i> Pay
+            </a>
+            <a href="./giftcards.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                Gift Cards
+            </a>
+            <a href="./card.html"
+                class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-credit-card mr-2"></i> Card
+            </a>
+        </div>
+    </nav>
+
+
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+
+
+    <div id="dashboard" class="dashboard">
+        <div class="sticky-animation">
+            <iframe src="https://lottie.host/embed/e2d9183f-9d09-4f4e-bf4a-7dc1b19737b8/8d7uhe3lZq.json" width="300"
+                height="300" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="dashboard-information">
+            <div class="dashboard-swap">
+                <div class="account-summary">
+                    <div class="currency-section">
+
+                        <div class="balance-section">
+                            <div class="flag-circle">
+                                <img style="margin-left: 14px;" src="./assets/image/flagtree.png" alt="Nigerian Naira"
+                                    class="flag">
+                            </div>
+                            <div class="balance-details">
+                                <p>Nigerian Naira</p>
+                                <h1 id="user-balance">₦</h1>
+                                <span id="balance-timestamp" style="font-size: 14px;"> Last updated 53s ago</span>
+                            </div>
+                        </div>
+                        <div class="action-section">
+                            <div class="action-button">
+                                <button id="paystack-btn" class="btn"><i class="fa-solid fa-plus"></i>Add Money</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="account-action">
+
+                    <div class="action-trigger"><i class="fa-solid fa-comment-dollar"></i><a
+                            href="./send.html">Spend</a></div>
+                    <div class="action-trigger"><i class="fa-solid fa-piggy-bank"></i><a href="">Save</a></div>
+                    <div class="action-trigger"><i class="fa-solid fa-landmark"></i><a href="">Borrow</a></div>
+                    <div class="action-trigger"><i class="fa-solid fa-hand-holding-dollar"></i><a href="">Invest</a>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="beneficiary-topsectiondetails">
+                <p>Beneficiaries</p>
+                <p>View All</p>
+            </div>
+
+            <div class="beneficiary-sectiondetails">
+                <div class="beneficairy-contact">
+                    <div class="beneficiary-initials">A</div>
+                    <p>Adedokun Adeshina</p>
+                </div>
+                <div class="beneficairy-contact">
+                    <div class="beneficiary-initials">A</div>
+                    <p>Adedokun Adeshina</p>
+                </div>
+                <div class="beneficairy-contact">
+                    <div class="beneficiary-initials">A</div>
+                    <p>Adedokun Adeshina</p>
+                </div>
+                <div class="beneficairy-contact">
+                    <div class="beneficiary-initials">A</div>
+                    <p>Adedokun Adeshina</p>
+                </div>
+            </div>
+            <div class="transactional-history">
+                <div class="max-w-5xl mx-auto px-4 py-8">
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <!-- Transaction list -->
+                        <ul class="divide-y divide-gray-200">
+                            <!-- Transaction item -->
+                            <li class="flex items-center justify-between py-4 px-6">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://example.com/kuda-logo.png" alt="Kuda Bank Logo" class="h-10 w-10">
+                                    <div>
+                                        <p class="font-medium text-gray-800">Olusola John Adanlawo</p>
+                                        <p class="text-sm text-gray-500">2:59 PM</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-800">₦3,600.00</p>
+                            </li>
+
+                            <!-- Repeat the list item for each transaction -->
+                            <li class="flex items-center justify-between py-4 px-6">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://example.com/kuda-logo.png" alt="Kuda Bank Logo" class="h-10 w-10">
+                                    <div>
+                                        <p class="font-medium text-gray-800">Pos Transfer - Steve Okwubi</p>
+                                        <p class="text-sm text-gray-500">2:53 PM</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-800">₦1,780.00</p>
+                            </li>
+
+                            <!-- Transaction item example with positive balance -->
+                            <li class="flex items-center justify-between py-4 px-6">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://example.com/kuda-logo.png" alt="Kuda Bank Logo" class="h-10 w-10">
+                                    <div>
+                                        <p class="font-medium text-gray-800">Abdulbaaki Adekule Akinade</p>
+                                        <p class="text-sm text-gray-500">12:26 PM</p>
+                                    </div>
+                                </div>
+                                <p class="text-green-500 font-medium">+₦20,000.00</p>
+                            </li>
+
+                            <!-- Repeat list items for other transactions -->
+
+                        </ul>
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <!-- MONEY SEND SECTION DISPLAY -->
+
+    <footer class="bg-[#5e3dc6] text-white py-8 px-4 sm:px-10 lg:px-20">
+        <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <!-- Logo and Description -->
+          <div class="flex flex-col space-y-4">
+            <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
+            <p class="text-sm text-gray-300">
+              Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial solutions for </br> everyone.
+            </p>
+          </div>
+      
+          <!-- Quick Links -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
+              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
+            </ul>
+          </div>
+      
+          <!-- Contact Information -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+            <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
+            <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
+            <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
+          </div>
+      
+          <!-- Social Media Links -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="https://www.instagram.com/" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Footer Bottom -->
+        <div class="mt-8 border-t border-gray-500 pt-6 text-center text-xs text-gray-400">
+          <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
+        </div>
+      </footer>
+      
+
+
+
+
+    <button id="signout-button" class="sticky-signout-button">Sign Out</button>
+
+    <!-- animation -->
+
+
+
+</body>
+
+</html>
+<script src="./js/script.js"></script>
+
+<script>
+    const signoutButton = document.getElementById("signout-button");
+    signoutButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        firebase.auth().signOut()
+            .then(() => {
+                alert("Signout Successful")
+                window.location.href = "./signin.html";
+            })
+            .catch(() => {
+                alert("signout error")
+            })
+    });
+</script>
+
+<script>
+    const amount = document.getElementById("amount");
+    var docRef = db.collection("users").doc("email");
+
+    docRef.get().then((balan) => {
+        if (balance.exists) {
+            console.log("Document data:", doc.data());
+            amount.innerText = '${5000}';
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+</script>
+
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+    document.getElementById('paystack-btn').addEventListener('click', function () {
+        var handler = PaystackPop.setup({
+            key: 'pk_live_e99f325375ceeaf6e5b48e14ff423f6ad031ebe0', // Replace with your public key
+            email: 'adeshina93@gmail.com', // Customer's email
+            amount: 500000, // Amount in kobo (for example, 5000 NGN = 500000 kobo)
+            currency: 'NGN',
+            ref: 'ref_' + new Date().getTime(), // Generate a unique reference
+            callback: function (response) {
+                // Handle successful payment here
+                console.log('Payment complete! Reference: ' + response.reference);
+                // Call your server to verify the transaction and top up balance
+            },
+            onClose: function () {
+                alert('Transaction was not completed, window closed.');
+            }
+        });
+        handler.openIframe();
+    });
+
+
+
+    const axios = require('axios');
+
+    const verifyPayment = async (reference) => {
+        try {
+            const response = await axios.get(`https://api.paystack.co/transaction/verify/${reference}`, {
+                headers: {
+                    Authorization: `sk_test_17ad81179964f2709476628c84010d5b03e86311` // Replace with your secret key
+                }
+            });
+            const paymentData = response.data;
+
+            if (paymentData.status && paymentData.data.status === 'success') {
+                // The payment is successful, top up user's balance
+                console.log('Transaction verified, top up balance.');
+                // Your logic to credit the user's account
+            } else {
+                console.log('Transaction verification failed.');
+            }
+        } catch (error) {
+            console.error('Error verifying payment:', error);
+        }
+    };
+
+</script>
+
+<script>
+   function users() {
+    // Retrieve the currentUser data from localStorage
+    const currentUserData = localStorage.getItem('currentUser');
+
+    if (!currentUserData) {
+        console.log("No user ID found in localStorage.");
+        window.location.href = 'login.html'; // Redirect to login if no user is stored
+        return; // Exit if no currentUserData is found
+    }
+
+    const { uid } = JSON.parse(currentUserData); // Parse and extract the UID from the stored data
+
+    // Reference the Firestore document using the UID
+    const docRef = db.collection("users").doc(uid);
+
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+            const userData = doc.data();
+
+            // Update UI elements with data from the Firestore document
+            document.getElementById("user-firstname").innerText = userData.firstname || "N/A";
+            document.getElementById("user-balance").innerText = userData.balance ? "N" + userData.balance : "N/A";
+            document.getElementById("user-address").innerText = userData.address || "N/A";
+            document.getElementById("user-bvn").innerText = userData.bvn || "N/A";
+            document.getElementById("user-phone").innerText = userData.phone || "N/A";
+            document.getElementById("user-email").innerText = userData.email || "N/A";
+            document.getElementById("user-country").innerText = userData.country || "N/A";
+            document.getElementById("user-account").innerText = userData.account || "N/A";
+
+            // Display "Last updated X ago" for balance timestamp
+            if (userData.balanceTimestamp) {
+                const balanceTimestamp = userData.balanceTimestamp.toDate();
+                const updateTimeAgo = getTimeAgo(balanceTimestamp);
+                document.getElementById("balance-timestamp").innerText = `Last updated ${updateTimeAgo}`;
+            } else {
+                document.getElementById("balance-timestamp").innerText = "N/A";
+            }
+        } else {
+            console.log("No such document!");
+            alert("No user data found in Firestore.");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+}
+
+// Helper function to calculate time ago in seconds, minutes, or hours
+function getTimeAgo(timestamp) {
+    const now = new Date();
+    const secondsAgo = Math.floor((now - timestamp) / 1000);
+
+    if (secondsAgo < 60) return `${secondsAgo}s ago`;
+    const minutesAgo = Math.floor(secondsAgo / 60);
+    if (minutesAgo < 60) return `${minutesAgo}m ago`;
+    const hoursAgo = Math.floor(minutesAgo / 60);
+    return `${hoursAgo}h ago`;
+}
+
+// Call the users function to fetch and display the user data
+window.onload = function () {
+    users();
+};
+
+</script>
+
+<!-- NAV BAR EFFECTS -->
+<script>
+    document.getElementById("home-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const navEntry = document.getElementById("nav-entry");
+
+        // Add splash animation
+        navEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./dashboard.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("send-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const sendEntry = document.getElementById("send-entry");
+
+        // Add splash animation
+        sendEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./send.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("pay-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const payEntry = document.getElementById("pay-entry");
+
+        // Add splash animation
+        payEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./pay.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("gift-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const giftEntry = document.getElementById("gift-entry");
+
+        // Add splash animation
+        giftEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./giftcards.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
+<script>
+    document.getElementById("card-nav").addEventListener("click", function (event) {
+        event.preventDefault(); // prevent immediate navigation
+
+        const cardEntry = document.getElementById("card-entry");
+
+        // Add splash animation
+        cardEntry.style.animation = "splashOut 1s ease forwards";
+
+        // Wait for 3 seconds (duration of animation) then navigate
+        setTimeout(() => {
+            // Navigate to another page or perform other actions
+            window.location.href = "./card.html"; // Replace with your URL
+        }, 2000); // 3 seconds
+    });
+</script>
