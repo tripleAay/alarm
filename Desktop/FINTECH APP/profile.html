@@ -37,7 +37,7 @@
 </style>
 
 <body>
-    <div id="dashboard" class="dashboard min-h-screen bg-gray-50">
+    <div id="dashboard" class="dashboard min-h-screen bg-[#5e3dc6]">
         <!-- Only display animation on iPad and Desktop view -->
         <div class="sticky-animation hidden md:block">
             <iframe src="https://lottie.host/embed/e2d9183f-9d09-4f4e-bf4a-7dc1b19737b8/8d7uhe3lZq.json" width="300"
@@ -65,10 +65,17 @@
                     <div class="ml-4">
                         <h2 class="text-xl font-semibold text-gray-800">Upload Profile Picture</h2>
                         <p class="text-sm text-gray-500">Click to select and upload a new profile image</p>
-                        <button id="uploadButton"
-                            class="mt-2 bg-purple-600 text-white px-4 py-2 rounded-lg shadow hover:bg-purple-700">
-                            Upload Image
-                        </button>
+                        <div class="flex items-center justify-between space-x-4">
+                            <button id="uploadButton"
+                                class="mt-2 bg-purple-600 text-white px-4 py-2 rounded-lg shadow hover:bg-[#1B5299]">
+                                Upload Image
+                            </button>
+
+                            <button id="change-pin"
+                                class="mt-2 bg-[#4CAF50] text-white px-4 py-2 rounded-lg shadow hover:bg-purple-700">
+                               Change Pin
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -148,9 +155,68 @@
 
     </div>
 
+    <footer class="bg-[#5e3dc6] text-white py-8 px-4 sm:px-10 lg:px-20">
+        <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+            <!-- Logo and Description -->
+            <div class="flex flex-col space-y-4">
+                <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
+                <p class="text-sm text-gray-300">
+                    Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial
+                    solutions for </br> everyone.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Information -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
+                <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
+                <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
+            </div>
+
+            <!-- Social Media Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.instagram.com/"
+                        class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="mt-8 border-t border-gray-500 pt-6 text-center text-xs text-gray-400">
+            <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
+        </div>
+    </footer>
+
 
     <button id="signout-button"
-        class="fixed bottom-4 right-4 bg-red-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-red-600">
+        class="fixed bottom-4 right-4 bg-red-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-red-600 z-50000">
         Sign Out
     </button>
 
@@ -224,66 +290,64 @@
 <script>
     // Firebase initialization (you must initialize Firebase in your project with config)
 
-// Function to preview the image
-function previewImage(event) {
-    const reader = new FileReader();
-    reader.onload = function () {
-        const output = document.getElementById('profileImagePreview');
-        output.src = reader.result;
-        output.style.display = 'block'; // Show the image preview
-    };
-    reader.readAsDataURL(event.target.files[0]);
-}
-
-// Upload the image to Firebase Storage
-document.getElementById('uploadButton').addEventListener('click', function () {
-    const file = document.getElementById('profilePic').files[0];
-    const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-
-    if (!currentUserData || !currentUserData.uid) {
-        alert('User not authenticated');
-        return;
+    // Function to preview the image
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById('profileImagePreview');
+            output.src = reader.result;
+            output.style.display = 'block'; // Show the image preview
+        };
+        reader.readAsDataURL(event.target.files[0]);
     }
 
-    if (file) {
-        // Firebase Storage reference (replace 'your-firebase-app' with your Firebase app details)
-        const storageRef = firebase.storage().ref('profile_images/' + currentUserData.uid + '/' + file.name);
+    // Upload the image to Firebase Storage
+    document.getElementById('uploadButton').addEventListener('click', function () {
+        const file = document.getElementById('profilePic').files[0];
+        const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
 
-        // Upload the image
-        const uploadTask = storageRef.put(file);
+        if (!currentUserData || !currentUserData.uid) {
+            alert('User not authenticated');
+            return;
+        }
 
-        uploadTask.on('state_changed', 
-            function progress(snapshot) {
-                // Optionally: Track the progress of the upload
-                const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + percentage + '% done');
-            },
-            function error(err) {
-                // Handle upload error
-                console.error('Upload failed:', err);
-                alert('Image upload failed');
-            },
-            function complete() {
-                // Get the download URL after the upload completes
-                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    alert('Upload successful!');
+        if (file) {
+            // Firebase Storage reference (replace 'your-firebase-app' with your Firebase app details)
+            const storageRef = firebase.storage().ref('profile_images/' + currentUserData.uid + '/' + file.name);
 
-                    // Store the image URL in localStorage (or Firebase Firestore if needed)
-                    currentUserData.profileImage = downloadURL;
-                    localStorage.setItem('currentUser', JSON.stringify(currentUserData));
+            // Upload the image
+            const uploadTask = storageRef.put(file);
 
-                    // Display the uploaded image
-                    const output = document.getElementById('profileImagePreview');
-                    output.src = downloadURL;
-                    output.style.display = 'block';
-                });
-            }
-        );
-    } else {
-        alert('No file selected');
-    }
-});
+            uploadTask.on('state_changed',
+                function progress(snapshot) {
+                    // Optionally: Track the progress of the upload
+                    const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + percentage + '% done');
+                },
+                function error(err) {
+                    // Handle upload error
+                    console.error('Upload failed:', err);
+                    alert('Image upload failed');
+                },
+                function complete() {
+                    // Get the download URL after the upload completes
+                    uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                        alert('Upload successful!');
+
+                        // Store the image URL in localStorage (or Firebase Firestore if needed)
+                        currentUserData.profileImage = downloadURL;
+                        localStorage.setItem('currentUser', JSON.stringify(currentUserData));
+
+                        // Display the uploaded image
+                        const output = document.getElementById('profileImagePreview');
+                        output.src = downloadURL;
+                        output.style.display = 'block';
+                    });
+                }
+            );
+        } else {
+            alert('No file selected');
+        }
+    });
 
 </script>
-
-

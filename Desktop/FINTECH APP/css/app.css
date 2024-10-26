@@ -500,7 +500,7 @@ body {
 }
 
 .menu a {
-    margin-right: 20px;
+    /* margin-right: 20px; */
     /* color: #5e3dc6; */
     text-decoration: none;
 }
@@ -842,9 +842,9 @@ body {
 .spendsection-display{
     width: 710px;
     height: 500px;
-    background-color: white;
-    box-shadow: 5px 5px 15px 2px rgba(0, 0, 0, 0.3);
-    padding: 20px;
+    background-color: #FFFCF9;
+    /* box-shadow: 5px 5px 15px 2px rgba(0, 0, 0, 0.3); */
+    padding: 30px;
    
     top: 50%;
     left: 50%;

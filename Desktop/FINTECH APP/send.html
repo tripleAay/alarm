@@ -7,6 +7,10 @@
     <title>TriplePay Dashboard</title>
     <link rel="stylesheet" href="./css/app.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -93,12 +97,12 @@
                 </a>
                 <a id="pay-nav" href="./pay.html"
                     class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                    <i id="pay-entry" class="page fa-solid fa-wallet mr-2"></i>Pay
+                    <i id="pay-entry" class="page fa-solid fa-money-bill-wave mr-2"></i>Pay
 
                 </a>
                 <a id="gift-nav" href="./giftcards.html"
                     class="hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                    <i id="gift-entry" class="page fa-solid fa-money-bill-wave mr-2"></i>Gift Cards
+                    <i id="gift-entry" class="page fa-solid fa-wallet mr-2"></i> My Wallet
 
                     </span>
                 </a>
@@ -141,7 +145,7 @@
             </a>
             <a href="./giftcards.html"
                 class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                Gift Cards
+                <i class="fa-solid fa-wallet mr-2"></i> Wallet
             </a>
             <a href="./card.html"
                 class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
@@ -212,62 +216,75 @@
         </div>
     </div>
 
-    <div id="sendBank-input" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center z-50 overflow-hidden">
-        <div class="form-card bg-white shadow-lg rounded-xl max-w-md w-full max-h-[90vh] p-6 space-y-6 relative overflow-y-auto">
+    <div id="sendBank-input"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center z-50 overflow-hidden">
+        <div
+            class="form-card bg-white shadow-lg rounded-xl max-w-md w-full max-h-[90vh] p-6 space-y-6 relative overflow-y-auto">
             <!-- Back and Add Beneficiary Buttons -->
             <div class="absolute top-4 left-4 w-full pr-4 flex items-center justify-between">
                 <!-- Back Button -->
-                <a id="back-send" href="#" class="text-[#5e3dc6] hover:text-[#4a34b8] text-lg font-semibold flex items-center">
+                <a id="back-send" href="#"
+                    class="text-[#5e3dc6] hover:text-[#4a34b8] text-lg font-semibold flex items-center">
                     <i class="fas fa-arrow-left mr-2"></i> Back
                 </a>
-            
+
                 <!-- Add Beneficiary Button -->
-                <button id="add-beneficiary-btn" class="bg-[#5e3dc6] hover:bg-[#4a34b8] text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg focus:ring-4 focus:ring-[#BFBB9C] transition-all duration-300 ease-in-out">
-                    <i class="fas fa-user-plus mr-2"></i> Add Beneficiary
+                <button type="submit" id="add-beneficiary-btn"
+                    class="bg-[#5e3dc6] hover:bg-[#4a34b8] text-white font-medium py-1.5 px-3 text-sm rounded-full shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-[#c3b9ec] transition-all duration-300 ease-in-out flex items-center justify-center">
+                    <i class="fas fa-user-plus text-white mr-1.5"></i> Add Beneficiary
                 </button>
+
             </div>
-            
-    
+
+
             <!-- Form Header -->
-            <h2 class="text-2xl font-bold text-gray-800 text-center mt-10">Send to Bank Account <span class="flag">🇳🇬</span></h2>
+            <h2 class="text-2xl font-bold text-gray-800 text-center mt-10">Send to Bank Account <span
+                    class="flag">🇳🇬</span></h2>
             <h3 class="text-lg text-gray-600 text-center">New NGN Recipient</h3>
-    
+
             <!-- Form -->
             <form class="space-y-5">
                 <!-- Bank Selection -->
                 <div class="input-group">
                     <label for="bank" class="block text-sm font-medium text-gray-700">Bank</label>
                     <div class="relative">
-                        <select id="banks" required class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300">
+                        <select id="banks" required
+                            class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300">
                             <option value="" disabled selected>Pay Daddie</option>
                             <option value="">Pay Daddie</option>
                         </select>
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
+                        <span
+                            class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
                             <i class="fas fa-chevron-down"></i>
                         </span>
                     </div>
                 </div>
-    
+
                 <!-- Account Number Input -->
                 <div class="input-group">
                     <label for="account-number" class="block text-sm font-medium text-gray-700">Account Number</label>
-                    <input type="number" id="account-number" placeholder="1234567890" required class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300">
+                    <input type="number" id="account-number" placeholder="1234567890" required
+                        class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300">
                 </div>
-    
+
                 <!-- Amount Input -->
                 <div class="input-group">
                     <label for="Amount" class="block text-sm font-medium text-gray-700">Amount</label>
-                    <input type="number" id="Amount" placeholder="NGN" required class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300">
+                    <input type="number" id="Amount" placeholder="NGN" required
+                        class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300">
                 </div>
-    
+
                 <!-- Transaction Description Input -->
                 <div class="input-group">
-                    <label for="description" class="block text-sm font-medium text-gray-700">Transaction Description</label>
-                    <textarea id="description" placeholder="Enter a brief description of the transaction..." required class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300 h-24"></textarea>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Transaction
+                        Description</label>
+                    <textarea id="description" placeholder="Enter a brief description of the transaction..." required
+                        class="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:ring-[#5e3dc6] focus:border-[#5e3dc6] transition-all duration-300 h-24"></textarea>
                 </div>
-    
+
                 <!-- Submit Button -->
-                <button type="submit" class="submit-btn w-full py-3 bg-[#5e3dc6] text-white rounded-lg font-semibold hover:bg-[#4a34b8] focus:ring-4 focus:ring-[#BFBB9C] transition-all duration-300 ease-in-out">
+                <button type="submit"
+                    class="submit-btn w-full py-3 bg-[#5e3dc6] text-white rounded-lg font-semibold hover:bg-[#4a34b8] focus:ring-4 focus:ring-[#BFBB9C] transition-all duration-300 ease-in-out">
                     Pay
                 </button>
             </form>
@@ -275,61 +292,63 @@
     </div>
     <footer class="bg-[#5e3dc6] text-white py-8 px-4 sm:px-10 lg:px-20">
         <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          
-          <!-- Logo and Description -->
-          <div class="flex flex-col space-y-4">
-            <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
-            <p class="text-sm text-gray-300">
-              Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial solutions for </br> everyone.
-            </p>
-          </div>
-      
-          <!-- Quick Links -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul class="space-y-2 text-sm">
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
-            </ul>
-          </div>
-      
-          <!-- Contact Information -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
-            <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
-            <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
-            <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
-          </div>
-      
-          <!-- Social Media Links -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
-            <div class="flex space-x-4">
-              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a href="https://www.instagram.com/" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-instagram"></i>
-              </a>
+
+            <!-- Logo and Description -->
+            <div class="flex flex-col space-y-4">
+                <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
+                <p class="text-sm text-gray-300">
+                    Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial
+                    solutions for </br> everyone.
+                </p>
             </div>
-          </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Information -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
+                <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
+                <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
+            </div>
+
+            <!-- Social Media Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.instagram.com/"
+                        class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-      
+
         <!-- Footer Bottom -->
         <div class="mt-8 border-t border-gray-500 pt-6 text-center text-xs text-gray-400">
-          <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
+            <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
         </div>
-      </footer>
-    
+    </footer>
+
 
 
 
@@ -564,74 +583,59 @@
 
 <!-- beneficiary  -->
 <script>
-    // Initialize Firestore
-    const db = firebase.firestore();
+    // Function to save beneficiary information
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('add-beneficiary-btn').addEventListener('click', async function () {
+            const bankSelect = document.getElementById('banks');
+            const accountNumberInput = document.getElementById('account-number');
 
-    document.getElementById("add-beneficiary-btn").addEventListener("click", addBeneficiary);
+            // Get values from the form and trim any extra spaces
+            const bankValue = bankSelect.value.trim();
+            const accountNumberValue = accountNumberInput.value.trim();
 
-    function addBeneficiary() {
-        // Capture form data
-        const bank = document.getElementById("banks").value;
-        const accountNumber = document.getElementById("account-number").value;
-        const amount = document.getElementById("amount").value;
-        const description = document.getElementById("description").value;
-        const timestamp = new Date();
+            // Check if fields are empty or have default/placeholder values
+            if (!bankValue && !accountNumberValue) {
+                alert("Kindly fill your Beneficiary Details");
+                return; // Stop execution if any field is empty or invalid
+            }
 
-        // Validate form inputs
-        if (!bank || !accountNumber || !amount || !description) {
-            alert("Please fill in all fields.");
-            return;
-        }
+            // Get current user data from local storage
+            const currentUserData = localStorage.getItem('currentUser');
+            if (!currentUserData) {
+                alert("No user is currently logged in.");
+                return;
+            }
 
-        // Save to Firestore
-        db.collection("beneficiaries").add({
-            bank,
-            accountNumber,
-            amount,
-            description,
-            timestamp
-        }).then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
-            alert("Beneficiary added successfully!");
+            const { uid } = JSON.parse(currentUserData);
 
-            // Clear form fields
-            document.getElementById("beneficiary-form").reset();
+            // Prepare beneficiary data to save
+            const beneficiaryData = {
+                bank: bankValue,
+                accountNumber: accountNumberValue,
+                // timestamp: firebase.firestore.FieldValue.serverTimestamp() // Adds a timestamp
+            };
 
-            // Display updated list of beneficiaries
-            displayBeneficiaries();
-        }).catch((error) => {
-            console.error("Error adding document: ", error);
+            try {
+                // Check if the account already exists in the Firestore collection for this user
+                const beneficiaryRef = db.collection("users").doc(uid).collection("beneficiary");
+                const existingBeneficiaries = await beneficiaryRef.where('accountNumber', '==', accountNumberValue).get();
+
+                if (!existingBeneficiaries.empty) {
+                    alert("A beneficiary with this account number already exists.");
+                    return; // Stop execution if account number already exists
+                }
+
+                // Save beneficiary data to Firestore with accountNumber as the document ID
+                await beneficiaryRef.doc(currentUserData.account).set(beneficiaryData); // Use accountNumber as document ID
+
+                alert("Beneficiary added successfully!");
+                // Optionally clear the input fields after successful addition
+                bankSelect.value = ""; // Reset to default
+                accountNumberInput.value = ""; // Clear input
+            } catch (error) {
+                console.error("Error adding beneficiary: ", error);
+                alert("There was an error adding the beneficiary. Please try again.");
+            }
         });
-    }
-
-    // Function to fetch and display beneficiaries on the page
-    function displayBeneficiaries() {
-        const beneficiariesContainer = document.getElementById("beneficiaries-list");
-        beneficiariesContainer.innerHTML = ""; // Clear existing data
-
-        db.collection("beneficiaries").orderBy("timestamp", "desc").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                const beneficiaryItem = document.createElement("div");
-                beneficiaryItem.classList.add("beneficiary-item");
-                beneficiaryItem.innerHTML = `
-                <p><strong>Bank:</strong> ${data.bank}</p>
-                <p><strong>Account Number:</strong> ${data.accountNumber}</p>
-                <p><strong>Amount:</strong> ${data.amount}</p>
-                <p><strong>Description:</strong> ${data.description}</p>
-                <p><strong>Timestamp:</strong> ${data.timestamp.toDate().toLocaleString()}</p>
-                <hr>
-            `;
-                beneficiariesContainer.appendChild(beneficiaryItem);
-            });
-        }).catch((error) => {
-            console.error("Error retrieving beneficiaries: ", error);
-        });
-    }
-
-    // Call displayBeneficiaries on page load to display existing data
-    window.onload = function () {
-        displayBeneficiaries();
-    };
-
+    });
 </script>

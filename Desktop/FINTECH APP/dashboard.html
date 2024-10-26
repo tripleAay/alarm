@@ -35,12 +35,14 @@
         padding: 10px;
         text-align: center;
     }
+
     .send-nav {
         cursor: pointer;
         display: inline-block;
         padding: 10px;
         text-align: center;
     }
+
     .pay-nav {
         cursor: pointer;
         display: inline-block;
@@ -73,7 +75,36 @@
     }
 
     /* Hide element after animation */
- 
+
+    .spinner {
+        width: 30px;
+        /* Set the width and height of the spinner */
+        height: 30px;
+        border: 4px solid transparent;
+        /* Border color */
+        border-top-color: #5e3dc6;
+        /* Spinner color */
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        /* Spin animation */
+        margin-left: 10px;
+        /* Spacing from button */
+    }
+
+    .hidden {
+        display: none;
+        /* Class to hide the spinner */
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 
 <body>
@@ -89,7 +120,7 @@
             <div class="menu text-gray-600 hidden md:flex space-x-6 text-gray-600 font-medium">
                 <a id="home-nav" href="./dashboard.html"
                     class=" flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                    <i id="nav-entry" class="page fa-solid fa-house mr-2"> <span>Home</span> </i> 
+                    <i id="nav-entry" class="page fa-solid fa-house mr-2"> <span>Home</span> </i>
                 </a>
                 <a id="send-nav" href="./send.html"
                     class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
@@ -97,14 +128,14 @@
                 </a>
                 <a id="pay-nav" href="./pay.html"
                     class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                    <i id="pay-entry" class="page fa-solid fa-wallet mr-2"></i>Pay
-                     
+                    <i id="pay-entry" class="page fa-solid fa-money-bill-wave mr-2"></i>Pay
+
                 </a>
                 <a id="gift-nav" href="./giftcards.html"
                     class="hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                    <i id="gift-entry" class="page fa-solid fa-money-bill-wave mr-2"></i>Gift Cards
-                        
-                    </span> 
+                    <i id="gift-entry" class="page fa-solid fa-wallet mr-2"></i> My Wallet
+
+                    </span>
                 </a>
                 <a id="card-nav" href="./card.html"
                     class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
@@ -145,7 +176,7 @@
             </a>
             <a href="./giftcards.html"
                 class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                Gift Cards
+                <i class="fa-solid fa-wallet mr-2"></i> Wallet
             </a>
             <a href="./card.html"
                 class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
@@ -191,6 +222,7 @@
                         <div class="action-section">
                             <div class="action-button">
                                 <button id="paystack-btn" class="btn"><i class="fa-solid fa-plus"></i>Add Money</button>
+                                <div id="spinner" class="spinner hidden"></div>
                             </div>
                         </div>
 
@@ -201,9 +233,9 @@
 
                     <div class="action-trigger"><i class="fa-solid fa-comment-dollar"></i><a
                             href="./send.html">Spend</a></div>
-                    <div class="action-trigger"><i class="fa-solid fa-piggy-bank"></i><a href="">Save</a></div>
-                    <div class="action-trigger"><i class="fa-solid fa-landmark"></i><a href="">Borrow</a></div>
-                    <div class="action-trigger"><i class="fa-solid fa-hand-holding-dollar"></i><a href="">Invest</a>
+                    <div class="action-trigger"><i class="fa-solid fa-piggy-bank"></i><a href="./giftcards.html">Save</a></div>
+                    <div class="action-trigger"><i class="fa-solid fa-landmark"></i><a href="./giftcards.html">Borrow</a></div>
+                    <div class="action-trigger"><i class="fa-solid fa-hand-holding-dollar"></i><a href="./giftcards.html">Invest</a>
                     </div>
 
                 </div>
@@ -296,61 +328,63 @@
 
     <footer class="bg-[#5e3dc6] text-white py-8 px-4 sm:px-10 lg:px-20">
         <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          
-          <!-- Logo and Description -->
-          <div class="flex flex-col space-y-4">
-            <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
-            <p class="text-sm text-gray-300">
-              Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial solutions for </br> everyone.
-            </p>
-          </div>
-      
-          <!-- Quick Links -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul class="space-y-2 text-sm">
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
-            </ul>
-          </div>
-      
-          <!-- Contact Information -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
-            <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
-            <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
-            <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
-          </div>
-      
-          <!-- Social Media Links -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
-            <div class="flex space-x-4">
-              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a href="https://www.instagram.com/" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-instagram"></i>
-              </a>
+
+            <!-- Logo and Description -->
+            <div class="flex flex-col space-y-4">
+                <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
+                <p class="text-sm text-gray-300">
+                    Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial
+                    solutions for </br> everyone.
+                </p>
             </div>
-          </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Information -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
+                <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
+                <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
+            </div>
+
+            <!-- Social Media Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.instagram.com/"
+                        class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-      
+
         <!-- Footer Bottom -->
         <div class="mt-8 border-t border-gray-500 pt-6 text-center text-xs text-gray-400">
-          <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
+            <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
         </div>
-      </footer>
-      
+    </footer>
+
 
 
 
@@ -397,8 +431,19 @@
 
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
+
 <script>
     document.getElementById('paystack-btn').addEventListener('click', function () {
+    // Show the spinner and hide the button
+    const spinner = document.getElementById('spinner');
+    const button = this;
+    
+    button.classList.add('hidden'); // Hide the button
+    spinner.classList.remove('hidden'); // Show the spinner
+    
+    // Wait for 2 seconds
+    setTimeout(() => {
+        // Call Paystack setup
         var handler = PaystackPop.setup({
             key: 'pk_live_e99f325375ceeaf6e5b48e14ff423f6ad031ebe0', // Replace with your public key
             email: 'adeshina93@gmail.com', // Customer's email
@@ -415,99 +460,79 @@
             }
         });
         handler.openIframe();
-    });
 
-
-
-    const axios = require('axios');
-
-    const verifyPayment = async (reference) => {
-        try {
-            const response = await axios.get(`https://api.paystack.co/transaction/verify/${reference}`, {
-                headers: {
-                    Authorization: `sk_test_17ad81179964f2709476628c84010d5b03e86311` // Replace with your secret key
-                }
-            });
-            const paymentData = response.data;
-
-            if (paymentData.status && paymentData.data.status === 'success') {
-                // The payment is successful, top up user's balance
-                console.log('Transaction verified, top up balance.');
-                // Your logic to credit the user's account
-            } else {
-                console.log('Transaction verification failed.');
-            }
-        } catch (error) {
-            console.error('Error verifying payment:', error);
-        }
-    };
+        // Hide the spinner and show the button again
+        spinner.classList.add('hidden');
+        button.classList.remove('hidden');
+    }, 2000); // 2 seconds
+});
 
 </script>
 
 <script>
-   function users() {
-    // Retrieve the currentUser data from localStorage
-    const currentUserData = localStorage.getItem('currentUser');
+    function users() {
+        // Retrieve the currentUser data from localStorage
+        const currentUserData = localStorage.getItem('currentUser');
 
-    if (!currentUserData) {
-        console.log("No user ID found in localStorage.");
-        window.location.href = 'login.html'; // Redirect to login if no user is stored
-        return; // Exit if no currentUserData is found
+        if (!currentUserData) {
+            console.log("No user ID found in localStorage.");
+            window.location.href = 'login.html'; // Redirect to login if no user is stored
+            return; // Exit if no currentUserData is found
+        }
+
+        const { uid } = JSON.parse(currentUserData); // Parse and extract the UID from the stored data
+
+        // Reference the Firestore document using the UID
+        const docRef = db.collection("users").doc(uid);
+
+        docRef.get().then((doc) => {
+            if (doc.exists) {
+                console.log("Document data:", doc.data());
+                const userData = doc.data();
+
+                // Update UI elements with data from the Firestore document
+                document.getElementById("user-firstname").innerText = userData.firstname || "N/A";
+                document.getElementById("user-balance").innerText = userData.balance ? "N" + userData.balance : "N/A";
+                document.getElementById("user-address").innerText = userData.address || "N/A";
+                document.getElementById("user-bvn").innerText = userData.bvn || "N/A";
+                document.getElementById("user-phone").innerText = userData.phone || "N/A";
+                document.getElementById("user-email").innerText = userData.email || "N/A";
+                document.getElementById("user-country").innerText = userData.country || "N/A";
+                document.getElementById("user-account").innerText = userData.account || "N/A";
+
+                // Display "Last updated X ago" for balance timestamp
+                if (userData.balanceTimestamp) {
+                    const balanceTimestamp = userData.balanceTimestamp.toDate();
+                    const updateTimeAgo = getTimeAgo(balanceTimestamp);
+                    document.getElementById("balance-timestamp").innerText = `Last updated ${updateTimeAgo}`;
+                } else {
+                    document.getElementById("balance-timestamp").innerText = "N/A";
+                }
+            } else {
+                console.log("No such document!");
+                alert("No user data found in Firestore.");
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
     }
 
-    const { uid } = JSON.parse(currentUserData); // Parse and extract the UID from the stored data
+    // Helper function to calculate time ago in seconds, minutes, or hours
+    function getTimeAgo(timestamp) {
+        const now = new Date();
+        const secondsAgo = Math.floor((now - timestamp) / 1000);
 
-    // Reference the Firestore document using the UID
-    const docRef = db.collection("users").doc(uid);
+        if (secondsAgo < 60) return `${secondsAgo}s ago`;
+        const minutesAgo = Math.floor(secondsAgo / 60);
+        if (minutesAgo < 60) return `${minutesAgo}m ago`;
+        const hoursAgo = Math.floor(minutesAgo / 60);
+        return `${hoursAgo}h ago`;
+    }
 
-    docRef.get().then((doc) => {
-        if (doc.exists) {
-            console.log("Document data:", doc.data());
-            const userData = doc.data();
-
-            // Update UI elements with data from the Firestore document
-            document.getElementById("user-firstname").innerText = userData.firstname || "N/A";
-            document.getElementById("user-balance").innerText = userData.balance ? "N" + userData.balance : "N/A";
-            document.getElementById("user-address").innerText = userData.address || "N/A";
-            document.getElementById("user-bvn").innerText = userData.bvn || "N/A";
-            document.getElementById("user-phone").innerText = userData.phone || "N/A";
-            document.getElementById("user-email").innerText = userData.email || "N/A";
-            document.getElementById("user-country").innerText = userData.country || "N/A";
-            document.getElementById("user-account").innerText = userData.account || "N/A";
-
-            // Display "Last updated X ago" for balance timestamp
-            if (userData.balanceTimestamp) {
-                const balanceTimestamp = userData.balanceTimestamp.toDate();
-                const updateTimeAgo = getTimeAgo(balanceTimestamp);
-                document.getElementById("balance-timestamp").innerText = `Last updated ${updateTimeAgo}`;
-            } else {
-                document.getElementById("balance-timestamp").innerText = "N/A";
-            }
-        } else {
-            console.log("No such document!");
-            alert("No user data found in Firestore.");
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-}
-
-// Helper function to calculate time ago in seconds, minutes, or hours
-function getTimeAgo(timestamp) {
-    const now = new Date();
-    const secondsAgo = Math.floor((now - timestamp) / 1000);
-
-    if (secondsAgo < 60) return `${secondsAgo}s ago`;
-    const minutesAgo = Math.floor(secondsAgo / 60);
-    if (minutesAgo < 60) return `${minutesAgo}m ago`;
-    const hoursAgo = Math.floor(minutesAgo / 60);
-    return `${hoursAgo}h ago`;
-}
-
-// Call the users function to fetch and display the user data
-window.onload = function () {
-    users();
-};
+    // Call the users function to fetch and display the user data
+    window.onload = function () {
+        users();
+    };
 
 </script>
 

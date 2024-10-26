@@ -38,12 +38,14 @@
         padding: 10px;
         text-align: center;
     }
+
     .send-nav {
         cursor: pointer;
         display: inline-block;
         padding: 10px;
         text-align: center;
     }
+
     .pay-nav {
         cursor: pointer;
         display: inline-block;
@@ -91,7 +93,7 @@
             <div class="menu text-gray-600 hidden md:flex space-x-6 text-gray-600 font-medium">
                 <a id="home-nav" href="./dashboard.html"
                     class=" flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                    <i id="nav-entry" class="page fa-solid fa-house mr-2"> <span>Home</span> </i> 
+                    <i id="nav-entry" class="page fa-solid fa-house mr-2"> <span>Home</span> </i>
                 </a>
                 <a id="send-nav" href="./send.html"
                     class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
@@ -99,14 +101,14 @@
                 </a>
                 <a id="pay-nav" href="./pay.html"
                     class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                    <i id="pay-entry" class="page fa-solid fa-wallet mr-2"></i>Pay
-                     
+                    <i id="pay-entry" class="page fa-solid fa-money-bill-wave mr-2"></i>Pay
+
                 </a>
                 <a id="gift-nav" href="./giftcards.html"
                     class="hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                    <i id="gift-entry" class="page fa-solid fa-money-bill-wave mr-2"></i>Gift Cards
-                        
-                    </span> 
+                    <i id="gift-entry" class="page fa-solid fa-wallet mr-2"></i> My Wallet
+
+                    </span>
                 </a>
                 <a id="card-nav" href="./card.html"
                     class="flex items-center hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
@@ -147,7 +149,7 @@
             </a>
             <a href="./giftcards.html"
                 class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
-                Gift Cards
+                <i class="fa-solid fa-wallet mr-2"></i> Wallet
             </a>
             <a href="./card.html"
                 class="block hover:text-[#5e3dc6] transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
@@ -155,6 +157,15 @@
             </a>
         </div>
     </nav>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
 
     <!-- PAY SECTION -->
     <div id="dashboard" class="dashboard bg-[#5e3dc6] min-h-screen py-10">
@@ -261,65 +272,67 @@
 
     <footer class="bg-[#5e3dc6] text-white py-8 px-4 sm:px-10 lg:px-20">
         <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          
-          <!-- Logo and Description -->
-          <div class="flex flex-col space-y-4">
-            <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
-            <p class="text-sm text-gray-300">
-              Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial solutions for </br> everyone.
-            </p>
-          </div>
-      
-          <!-- Quick Links -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul class="space-y-2 text-sm">
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
-              <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
-            </ul>
-          </div>
-      
-          <!-- Contact Information -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
-            <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
-            <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
-            <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
-          </div>
-      
-          <!-- Social Media Links -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
-            <div class="flex space-x-4">
-              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a href="https://www.instagram.com/" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
-                <i class="fab fa-instagram"></i>
-              </a>
+
+            <!-- Logo and Description -->
+            <div class="flex flex-col space-y-4">
+                <h2 class="text-2xl font-semibold text-white">Pay Daddie</h2>
+                <p class="text-sm text-gray-300">
+                    Simplifying finance, empowering your future. Pay Daddie offers secure and efficient financial
+                    solutions for </br> everyone.
+                </p>
             </div>
-          </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Home</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">About Us</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Services</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">FAQs</a></li>
+                    <li><a href="#" class="hover:text-[#BFBB9C] transition duration-200">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Information -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <p class="text-sm text-gray-300">28 Ibitoye Str, Ajegunle-Apapa, Lagos</p>
+                <p class="text-sm text-gray-300">Email: support@paydaddie.com</p>
+                <p class="text-sm text-gray-300">Phone: +234 817 1347 263</p>
+            </div>
+
+            <!-- Social Media Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.instagram.com/"
+                        class="text-gray-300 hover:text-[#BFBB9C] transition duration-200">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-      
+
         <!-- Footer Bottom -->
         <div class="mt-8 border-t border-gray-500 pt-6 text-center text-xs text-gray-400">
-          <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
+            <p>&copy; 2024 Pay Daddie. All rights reserved.</p>
         </div>
-      </footer>
+    </footer>
 
 </body>
 
 </html>
-<script src="./js/script.js" ></script>
+<script src="./js/script.js"></script>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
