@@ -355,7 +355,6 @@
 
     <button id="signout-button" class="sticky-signout-button">Sign Out</button>
 
-    <script type="module" src="path/to/firebase-init.js"></script>
 </body>
 
 </html>
@@ -601,41 +600,42 @@
 
             // Get current user data from local storage
             const currentUserData = localStorage.getItem('currentUser');
-            if (!currentUserData) {
-                alert("No user is currently logged in.");
-                return;
-            }
-
-            const { uid } = JSON.parse(currentUserData);
-
-            // Prepare beneficiary data to save
-            const beneficiaryData = {
-                bank: bankValue,
-                accountNumber: accountNumberValue,
-                // timestamp: firebase.firestore.FieldValue.serverTimestamp() // Adds a timestamp
-            };
-
-            try {
-                // Check if the account already exists in the Firestore collection for this user
-                const beneficiaryRef = db.collection("users").doc(uid).collection("beneficiary");
-                const existingBeneficiaries = await beneficiaryRef.where('accountNumber', '==', accountNumberValue).get();
-
-                if (!existingBeneficiaries.empty) {
-                    alert("A beneficiary with this account number already exists.");
-                    return; // Stop execution if account number already exists
+                if (!currentUserData) {
+                    alert("No user is currently logged in.");
+                    return;
                 }
 
-                // Save beneficiary data to Firestore with accountNumber as the document ID
-                await beneficiaryRef.doc(currentUserData.account).set(beneficiaryData); // Use accountNumber as document ID
+                const { uid } = JSON.parse(currentUserData);
 
-                alert("Beneficiary added successfully!");
-                // Optionally clear the input fields after successful addition
-                bankSelect.value = ""; // Reset to default
-                accountNumberInput.value = ""; // Clear input
-            } catch (error) {
-                console.error("Error adding beneficiary: ", error);
-                alert("There was an error adding the beneficiary. Please try again.");
-            }
+                // Prepare beneficiary data to save
+                const beneficiaryData = {
+                    bank: bankValue,
+                    accountNumber: accountNumberValue,
+                    // timestamp: firebase.firestore.FieldValue.serverTimestamp() // Uncomment if you want to add timestamp
+                };
+
+                try {
+                    // Reference to the user's beneficiary collection
+                    const beneficiaryRef = db.collection("users").doc(uid).collection("beneficiary");
+
+                    // Check if the account number already exists
+                    const existingBeneficiary = await beneficiaryRef.doc(accountNumberValue).get();
+                    if (existingBeneficiary.exists) {
+                        alert("A beneficiary with this account number already exists.");
+                        return; // Stop execution if account number already exists
+                    }
+
+                    // Save beneficiary data to Firestore using accountNumber as the document ID
+                    await beneficiaryRef.doc(accountNumberValue).set(beneficiaryData);
+
+                    alert("Beneficiary added successfully!");
+                    // Optionally clear the input fields after successful addition
+                    bankSelect.value = "Select Bank"; // Reset to default
+                    accountNumberInput.value = ""; // Clear input
+                } catch (error) {
+                    console.error("Error adding beneficiary: ", error);
+                    alert("There was an error adding the beneficiary. Please try again.");
+                }
+            });
         });
-    });
 </script>
